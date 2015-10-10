@@ -11,5 +11,12 @@
 
     <artifactId>couchdb</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.yesql</groupId>
+            <artifactId>nosql</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

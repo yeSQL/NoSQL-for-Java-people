@@ -1,6 +1,6 @@
 # NoSQL for Java People
 
-## Document oriented
+## [Document oriented](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented)
 
-### [CouchDB](http://couchdb.apache.org)
+### [CouchDB](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 
