@@ -1,3 +1,3 @@
 function (doc) {
-    emit([doc.speciesName, doc.genusName], doc);
+    emit([doc.speciesName, doc.genusName], doc._id);
 }
