@@ -1,13 +1,20 @@
 package com.github.yesql.dao;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * @author Martin Janys
  */
-public interface GenericDao<T, ID> {
+public interface GenericDao<T, ID extends Serializable> {
 
-    T find(ID id);
-    T save(T o);
-    T update(T o);
-    void delete(ID id);
+    T findEntry(ID id);
+    List<T> findAllEntries();
+    T saveEntry(T o);
+    T updateEntry(T o);
+    void deleteEntry(ID id);
+    void deleteEntry(T o);
 
+    int countAll();
+    void deleteAll();
 }

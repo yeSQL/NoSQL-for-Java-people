@@ -31,9 +31,20 @@
 ## Creating database
 
 * list DBs - [http://127.0.0.1:5984/_all_dbs](http://127.0.0.1:5984/_all_dbs)
-* management - [http://127.0.0.1:5984/_utils/](http://127.0.0.1:5984/_utils/)
+* management (called *Futon*) - [http://127.0.0.1:5984/_utils/](http://127.0.0.1:5984/_utils/)
   * Create database ...
-  * name: test
+    * name: animals
+  * View created database
+  * Security (setup admin access)
+    * go to /etc/couchdb/local.ini (on Windows in Program Files install dir)
+    * add to section \[admins\]: admin = admin
+    * restart
+
+### Others commands
+
+* restart:
+    * curl -X POST http://localhost:5984/_restart -H"Content-Type: application/json"
+    * (auth) curl -X POST http://admin:admin@localhost:5984/_restart -H"Content-Type: application/json"
 
 ## Java interfaces
 
@@ -43,6 +54,13 @@
 * CouchDB4J
 * LightCouch
 
-
 ## Ektorp
 
+### Client setup
+
+* \[couchdb\]@/src/main/resources/couchdb.properties
+* \[couchdb\]@com.github.yesql.CouchDbConfig
+
+### Dao implementation
+
+* \[couchdb\]@com.github.yesql.dao.AnimalCouchDbDao

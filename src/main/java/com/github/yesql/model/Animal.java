@@ -1,13 +1,14 @@
 package com.github.yesql.model;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Martin Janys
  */
 public class Animal {
 
-    private String id;
     private String speciesName;
     private String genusName;
     private int weight;
@@ -15,12 +16,19 @@ public class Animal {
 
     private List<String> areas;
 
-    public String getId() {
-        return id;
+    @Override
+    public String toString() {
+        return com.google.common.base.Objects.toStringHelper(this)
+                .add("speciesName", speciesName)
+                .add("genusName", genusName)
+                .add("weight", weight)
+                .add("length", length)
+                .add("areas", areas)
+                .toString();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Serializable getId() {
+        return null;
     }
 
     public String getSpeciesName() {

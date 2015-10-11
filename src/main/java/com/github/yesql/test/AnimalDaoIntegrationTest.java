@@ -2,54 +2,34 @@ package com.github.yesql.test;
 
 import com.github.yesql.dao.AnimalDao;
 import com.github.yesql.model.Animal;
-import org.biins.objectbuilder.builder.ObjectBuilder;
-import org.biins.objectbuilder.builder.generator.ValuesGenerator;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
+import javax.management.ObjectName;
 import java.util.List;
+
+import static org.testng.Assert.*;
 
 /**
  * @author Martin Janys
  */
+@SuppressWarnings("unchecked")
 @ContextConfiguration(
         loader = AnnotationConfigContextLoader.class,
         classes = {AnimalDaoIntegrationTest.DefaultConfig.class}
 )
-public abstract class AnimalDaoIntegrationTest extends AbstractTestNGSpringContextTests {
+public abstract class AnimalDaoIntegrationTest extends AnimalDaoTestBase {
 
-    protected static final String[] SPECIES_NAMES = new String[]{
-            "ant", "bat", "cobra", "donkey", "eagle", "fox", "gorilla", "hyena", "jaguar", "kangaroo"
-    };
-    protected static final String[] GENUS_NAMES = new String[]{
-            "pharaoh", "big", "indian", "domestic", "sea", "vulpes", "mountain", "black-headed", "panther", "australian"
-    };
-    protected static final Integer[] WEIGHTS = new Integer[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    };
-    protected static final Integer[] LENGTHS = new Integer[]{
-            10, 9, 9, 7, 6, 5, 4, 3, 2, 1
-    };
-    protected static final List[] AREAS = new List[]{
-            Arrays.asList("forrest"),
-            Arrays.asList("cave"),
-            Arrays.asList("desert", "India"),
-            Arrays.asList("America", "steppe"),
-            Arrays.asList("Europe", "Asia"),
-            Arrays.asList("forrest", "Europe", "America"),
-            Arrays.asList("Africa", "rain forrest"),
-            Arrays.asList("Africa", "Asia"),
-            Arrays.asList("South America"),
-            Arrays.asList("Australia")
-    };
-
+    protected AnimalDaoIntegrationTest(Class<? extends Animal> modelClass) {
+        super(modelClass);
+    }
 
     @Configuration
     public static class DefaultConfig {
@@ -57,7 +37,7 @@ public abstract class AnimalDaoIntegrationTest extends AbstractTestNGSpringConte
 
     @Autowired
     @SuppressWarnings("SpringJavaAutowiringInspection")
-    private AnimalDao dao;
+    protected AnimalDao dao;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -67,74 +47,161 @@ public abstract class AnimalDaoIntegrationTest extends AbstractTestNGSpringConte
     public void tearDown() throws Exception {
     }
 
-    protected List<Animal> generate10Animals() {
-        return generateAnimals(10);
-    }
-
-    private List<Animal> generateAnimals(int count) {
-        return new ObjectBuilder()
-                .onObject()
-                    .ignoreProperty("id")
-                    // String speciesName;
-                    .onProperty("speciesName", new ValuesGenerator<String>(SPECIES_NAMES))
-                    // String familyName;
-                    .onProperty("genusName", new ValuesGenerator<String>(GENUS_NAMES))
-                    // int weight;
-                    .onProperty("weight", new ValuesGenerator<Integer>(WEIGHTS))
-                    // int length;
-                    .onProperty("length", new ValuesGenerator<Integer>(LENGTHS))
-                    // List<String> areas;
-                    .onProperty("areas", new ValuesGenerator<List>(AREAS))
-                .build(Animal.class, count);
-    }
-
     @Test(groups = "create")
     public void testSave() {
-        List<Animal> animals = generateAnimals(10);
+        for (Animal animal : generate10Animals()) {
+            logger.info("Saving " + animal);
+            dao.saveEntry(animal);
+            assertNotNull(animal.getId());
+        }
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
+    public void testFindAll() {
+        List<Animal> animals  = dao.findAllEntries();
+
+        assertEquals(animals.size(), 10);
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", dependsOnMethods = "testFindAll")
     public void testFind() {
-
+        List<Animal> allEntries = dao.findAllEntries();
+        for (Animal a1 : allEntries) {
+            Animal a2 = (Animal) dao.findEntry(a1.getId());
+            assertEquals(compareAnimal(a1, a2), 0);
+        }
     }
 
-    @Test(groups = "read", dependsOnGroups = "create")
+    @Test(groups = "read", dependsOnGroups = "create", dependsOnMethods = "testFindAll")
     public void testUpdate() {
+        Animal a = first();
+        int length = a.getLength();
+        a.setLength(101);
+        dao.updateEntry(a);
 
+        assertEquals(a.getLength(), 101);
+        Animal animal = (Animal) dao.findEntry(a.getId());
+        assertEquals(animal.getLength(), 101);
+
+        // cleanup
+
+        a.setLength(length);
+        dao.updateEntry(a);
+
+        assertEquals(a.getLength(), length);
+        animal = (Animal) dao.findEntry(a.getId());
+        assertEquals(animal.getLength(), length);
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindBySpeciesName() throws Exception {
-
+        for (String speciesName : SPECIES_NAMES) {
+            Animal animal = (Animal) one(dao.findBySpeciesName(speciesName));
+            assertEquals(animal.getSpeciesName(), speciesName);
+        }
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByGenusName() throws Exception {
+        for (String genusName : GENUS_NAMES) {
+            Animal animal = (Animal) one(dao.findByGenusName(genusName));
+            assertEquals(animal.getGenusName(), genusName);
+        }
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create")
+    public void  testFindBySpeciesNameAndGenusName() throws  Exception {
+        for (int i = 0; i < SPECIES_NAMES.length; i++) {
+            String speciesName = SPECIES_NAMES[i];
+            String genusName = GENUS_NAMES[i];
+
+            Animal animal = (Animal) one(dao.findBySpeciesNameAndGenusName(speciesName, genusName));
+            assertEquals(animal.getGenusName(), genusName);
+            assertEquals(animal.getSpeciesName(), speciesName);
+        }
 
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByWeight() throws Exception {
+        for (int weight : WEIGHTS) {
+            Animal animal = (Animal) one(dao.findByWeight(weight));
+            assertEquals(animal.getWeight(), weight);
+        }
 
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByWeightBetween() throws Exception {
+        List<Animal> animals = dao.findByWeightBetween(3, 7);
 
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByArea() throws Exception {
-
+        for (List<String> areas : AREAS) {
+            for (String area : areas) {
+                Animal animal = (Animal) one(dao.findByArea(area));
+                assertTrue(areas.containsAll(animal.getAreas()));
+            }
+        }
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByAreaIn() throws Exception {
+        for (List<String> areas : AREAS) {
+            Animal animal = (Animal) one(dao.findByAreaIn(areas.toArray(new String[areas.size()])));
+            assertEquals(animal.getAreas(), areas);
+        }
+        for (List<String> areas : AREAS) {
+            Animal animal = (Animal) one(dao.findByAreaIn(first(areas)));
+            assertEquals(animal.getAreas(), areas);
+        }
+
+        Animal animal = (Animal) one(dao.findByAreaIn());
+        assertNull(animal);
 
     }
 
-    @Test(dependsOnGroups = "read")
-    public void testDelete() {
-
+    @Test(groups = "read", dependsOnGroups = "create")
+    public void testCount() throws Exception {
+        List<Animal> allEntries = dao.findAllEntries();
+        assertEquals(allEntries.size(), dao.countAll());
     }
+
+    @Test(dependsOnGroups = "read", alwaysRun = true)
+    public void testDeleteAll() {
+        List<Animal> allEntries = dao.findAllEntries();
+        int count = allEntries.size();
+        dao.deleteEntry(allEntries.get(0));
+
+        assertEquals(dao.countAll(), count - 1);
+
+        dao.deleteAll();
+
+        assertEquals(dao.countAll(), 0);
+    }
+
+    @Test(dependsOnMethods = "testDeleteAll", alwaysRun = true)
+    public void cleanup() {
+        dao.deleteAll();
+    }
+
+    protected Animal first() {
+        List<Animal> animals = dao.findAllEntries();
+        return first(animals);
+    }
+
+    protected <T> T first(List<T> list) {
+        return !CollectionUtils.isEmpty(list) ? list.get(0) : null;
+    }
+
+    protected <T> T one(List<T> list) {
+        switch (list.size()) {
+            case 0: return null;
+            case 1: return list.get(0);
+            default: throw new IllegalStateException();
+        }
+    }
+
 }
