@@ -34,7 +34,6 @@
 * management (called *Futon*) - [http://127.0.0.1:5984/_utils/](http://127.0.0.1:5984/_utils/)
   * Create database ...
     * name: animals
-  * View created database
   * Security (setup admin access)
     * go to /etc/couchdb/local.ini (on Windows in Program Files install dir)
     * add to section \[admins\]: admin = admin
