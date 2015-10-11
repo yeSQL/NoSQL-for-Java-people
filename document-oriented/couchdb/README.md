@@ -47,7 +47,7 @@
 
 ## Java interfaces
 
-* **Ektorp**
+* [**Ektorp**](http://ektorp.org/reference_documentation.html)
 * JRelax
 * jcouchdb
 * CouchDB4J
