@@ -1,6 +1,6 @@
-package com.github.yesql.test;
+package com.github.yesql.couchdb.test;
 
-import com.github.yesql.model.Animal;
+import com.github.yesql.couchdb.model.Animal;
 import com.google.common.collect.ComparisonChain;
 import org.apache.log4j.Logger;
 import org.biins.objectbuilder.builder.ObjectBuilder;

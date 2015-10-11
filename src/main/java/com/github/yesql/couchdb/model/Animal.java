@@ -1,4 +1,4 @@
-package com.github.yesql.model;
+package com.github.yesql.couchdb.model;
 
 import java.io.Serializable;
 import java.util.List;

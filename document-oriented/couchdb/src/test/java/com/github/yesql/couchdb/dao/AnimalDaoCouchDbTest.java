@@ -1,9 +1,9 @@
-package com.github.yesql.dao;
+package com.github.yesql.couchdb.dao;
 
-import com.github.yesql.CouchDbConfig;
-import com.github.yesql.model.Animal;
-import com.github.yesql.model.CouchDbAnimal;
-import com.github.yesql.test.AnimalDaoIntegrationTest;
+import com.github.yesql.couchdb.CouchDbConfig;
+import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.couchdb.model.CouchDbAnimal;
+import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
 import org.biins.objectbuilder.builder.ObjectBuilder;
 import org.springframework.test.context.ContextConfiguration;
 

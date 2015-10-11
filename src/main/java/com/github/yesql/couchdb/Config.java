@@ -1,4 +1,4 @@
-package com.github.yesql;
+package com.github.yesql.couchdb;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;

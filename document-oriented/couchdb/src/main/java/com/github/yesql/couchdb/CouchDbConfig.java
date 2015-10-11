@@ -1,7 +1,7 @@
-package com.github.yesql;
+package com.github.yesql.couchdb;
 
-import com.github.yesql.dao.AnimalCouchDbDao;
-import com.github.yesql.dao.AnimalDao;
+import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.couchdb.dao.AnimalCouchDbDao;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;

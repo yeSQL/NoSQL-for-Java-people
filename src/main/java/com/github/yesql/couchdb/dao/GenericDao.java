@@ -1,4 +1,4 @@
-package com.github.yesql.dao;
+package com.github.yesql.couchdb.dao;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.github.yesql.test;
+package com.github.yesql.couchdb.test;
 
-import com.github.yesql.dao.AnimalDao;
-import com.github.yesql.model.Animal;
+import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.couchdb.model.Animal;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import javax.management.ObjectName;
 import java.util.List;
 
 import static org.testng.Assert.*;

@@ -1,4 +1,4 @@
-package com.github.yesql.model;
+package com.github.yesql.couchdb.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
