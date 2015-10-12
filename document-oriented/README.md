@@ -1,4 +1,4 @@
-# Document oriented database
+# Document oriented databases
 
 [Wikipedia](https://en.wikipedia.org/wiki/Document-oriented_database)
 
@@ -8,8 +8,11 @@
 
 ## [CouchDB](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 
-## Elasticsearch TODO
+## Elasticsearch
+Coming soon
 
-## MongoDB TODO
+## MongoDB
+Coming soon
 
-## Postgres (JSON Store) TODO
+## Postgres (JSON Store)
+Coming soon
