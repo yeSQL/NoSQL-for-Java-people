@@ -28,22 +28,45 @@
 * download - [http://couchdb.apache.org/#download](http://couchdb.apache.org/#download)
 * test service - [http://127.0.0.1:5984/](http://127.0.0.1:5984/)
 
+TODO curl create
+TODO replication
+
 ## Creating database
 
-* list DBs - [http://127.0.0.1:5984/_all_dbs](http://127.0.0.1:5984/_all_dbs)
-* management (called *Futon*) - [http://127.0.0.1:5984/_utils/](http://127.0.0.1:5984/_utils/)
-  * Create database ...
-    * name: animals
-  * Security (setup admin access)
+* GUI management (called *Futon*) - [http://127.0.0.1:5984/_utils/](http://127.0.0.1:5984/_utils/)
+* Security (setup admin access)
     * go to /etc/couchdb/local.ini (on Windows in Program Files install dir)
     * add to section \[admins\]: admin = admin
     * restart
 
-### Others commands
-
-* restart:
-    * curl -X POST http://localhost:5984/_restart -H"Content-Type: application/json"
-    * (auth) curl -X POST http://admin:admin@localhost:5984/_restart -H"Content-Type: application/json"
+### REST API
+* auth http - http://admin:admin@localhost:5984/...
+* db status
+```
+curl http://127.0.0.1:5984/
+```
+* list db
+```
+curl http://127.0.0.1:5984/_all_dbs
+```
+* create db
+```
+curl -X PUT http://127.0.0.1:5984/animals
+```
+* delete db
+```
+curl -vX DELETE http://127.0.0.1:5984/animals
+```
+* replicate
+```
+curl -vX POST http://127.0.0.1:5984/_replicate -d '{"source":"src","target":"target-replica"}'
+```
+* restart
+```
+curl -X POST http://localhost:5984/_restart -H"Content-Type: application/json"
+(auth)
+curl -X POST http://admin:admin@localhost:5984/_restart -H"Content-Type: application/json"
+```
 
 ## Java interfaces
 
