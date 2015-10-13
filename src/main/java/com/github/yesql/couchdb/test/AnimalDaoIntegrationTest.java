@@ -133,6 +133,20 @@ public abstract class AnimalDaoIntegrationTest extends AnimalDaoTestBase {
     public void testFindByWeightBetween() throws Exception {
         List<Animal> animals = dao.findByWeightBetween(3, 7);
 
+        assertEquals(animals.size(), 5);
+        for (Animal animal : animals) {
+            assertEquals(compareAnimal(animal, buildAnimalResult(animal.getSpeciesName())), 0);
+        }
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create")
+    public void testFindByWeightOrLength() throws Exception {
+        List<Animal> animals = dao.findByWeightOrLength(5);
+
+        assertEquals(animals.size(), 2);
+        for (Animal animal : animals) {
+            assertEquals(compareAnimal(animal, buildAnimalResult(animal.getSpeciesName())), 0);
+        }
     }
 
     @Test(groups = "read", dependsOnGroups = "create")

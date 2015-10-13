@@ -104,6 +104,11 @@ public class AnimalCouchDbDao extends CouchDbRepositorySupport<CouchDbAnimal> im
         return db.queryView(createQuery("by_weight_between").startKey(startWeight).endKey(endWeight).includeDocs(true), CouchDbAnimal.class);
     }
 
+    @View(name = "by_weight_or_length", map = "classpath:/script/animal/map_by_weight_or_length.js")
+    public List<CouchDbAnimal> findByWeightOrLength(int size) {
+        return db.queryView(createQuery("by_weight_or_length").key(size).includeDocs(true), CouchDbAnimal.class);
+    }
+
     @View(name = "by_area", map = "classpath:/script/animal/map_by_area.js")
     public List<CouchDbAnimal> findByArea(String area) {
         return db.queryView(createQuery("by_area").key(area).includeDocs(true), CouchDbAnimal.class);
@@ -113,7 +118,7 @@ public class AnimalCouchDbDao extends CouchDbRepositorySupport<CouchDbAnimal> im
     public List<CouchDbAnimal> findByAreaIn(String... area) {
         return new ArrayList<CouchDbAnimal>(
                 new HashSet<CouchDbAnimal>(
-                        db.queryView(createQuery("by_area").keys(Arrays.asList(area)).includeDocs(true), CouchDbAnimal.class)
+                        db.queryView(createQuery("by_areas").keys(Arrays.asList(area)).includeDocs(true), CouchDbAnimal.class)
                 )
         );
     }

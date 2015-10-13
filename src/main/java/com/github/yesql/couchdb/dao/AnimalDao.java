@@ -15,6 +15,7 @@ public interface AnimalDao<ANIMAL extends Animal, ID extends Serializable> exten
     List<ANIMAL> findBySpeciesNameAndGenusName(String speciesName, String genusName);
     List<ANIMAL> findByWeight(int weight);
     List<ANIMAL> findByWeightBetween(int startWeight, int endWeight);
+    List<ANIMAL> findByWeightOrLength(int size);
     List<ANIMAL> findByArea(String area);
     List<ANIMAL> findByAreaIn(String ... area);
 
