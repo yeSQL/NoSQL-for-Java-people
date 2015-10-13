@@ -2,7 +2,7 @@
 
 ## [Document oriented databases](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented)
 
-### [CouchDB](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
+* [**CouchDB**](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 
 ## [Key-value databases](https://github.com/mjanys/NoSQL-for-Java-people/tree/master/key-value)
 Coming soon
