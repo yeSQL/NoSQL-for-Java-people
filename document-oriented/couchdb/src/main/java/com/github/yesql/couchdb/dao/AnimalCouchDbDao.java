@@ -10,10 +10,7 @@ import org.ektorp.support.GenerateView;
 import org.ektorp.support.View;
 import org.springframework.beans.factory.InitializingBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Martin Janys
@@ -39,6 +36,10 @@ public class AnimalCouchDbDao extends CouchDbRepositorySupport<CouchDbAnimal> im
     }
 
     public CouchDbAnimal saveEntry(CouchDbAnimal animal) {
+        /**
+         * ! You should do UUID in app (prefer than in DB) this prevents double entry creation if DB fails
+         */
+        animal.setId(UUID.randomUUID().toString());
         add(animal);
         return animal;
     }

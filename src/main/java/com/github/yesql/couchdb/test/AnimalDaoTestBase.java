@@ -78,7 +78,9 @@ public class AnimalDaoTestBase extends AbstractTestNGSpringContextTests {
                 .and();
     }
 
-    protected Animal buildAnimalResult(final int index) {
+    @SuppressWarnings("unchecked")
+    protected Animal buildAnimalResult(String name) {
+        final int index = Arrays.asList(SPECIES_NAMES).indexOf(name);
         return new Animal() {{
             setSpeciesName(SPECIES_NAMES[index % SPECIES_NAMES.length]);
             setGenusName(GENUS_NAMES[index % GENUS_NAMES.length]);

@@ -44,7 +44,7 @@ public class AnimalDaoCouchDbTest extends AnimalDaoIntegrationTest {
             assertTrue(animal instanceof CouchDbAnimal);
             assertNotNull(((CouchDbAnimal)animal).getId());
             assertNotNull(((CouchDbAnimal)animal).getRevision());
-            assertEquals(compareAnimal(animal, buildAnimalResult(i)), 0);
+            assertEquals(compareAnimal(animal, buildAnimalResult(animal.getSpeciesName())), 0);
         }
     }
 }
