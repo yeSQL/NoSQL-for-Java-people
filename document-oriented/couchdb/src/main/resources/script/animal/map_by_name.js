@@ -1,3 +1,5 @@
 function (doc) {
-    emit(doc.speciesName, doc);
+    if ('speciesName' in doc) { // guards data in unstructured world
+        emit(doc.speciesName, doc);
+    }
 }
