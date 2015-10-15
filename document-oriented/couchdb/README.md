@@ -23,13 +23,23 @@
     <dt>
 </dl>
 
+## Conflicts
+
+* CouchDB could generate four types of conflicts in multi node enviroment:
+    * Document creation conflicts - 1 or more nodes takes same id, you may generate new ID again
+    * Document update conflicts - 1 or more nodes update changed document, revision of updated document is already outdated, you may fetch actual revision and update again
+    * Document replication conflicts - nodes have different revision as actual
+    * Document deletion replication conflicts - one node deleted document and second updated document
+* CouchDB does not attempt to merge the conflicting revision
+* Is up to your application to resolve conflict in read and by job task
+* In app you can resolve conflict by merging, last win, first win or other strategies
+* CoachDB has deterministic algorithm how return same revision of document at all nodes. It is based on revision id which consist of prefix (revision sequence number) and UUID. UUID is compared alphabetically. Last revision or if is same alphabetical first is returned.
+* **Best practice**: Avoid conflicts by data design
+
 ## Install
 
 * download - [http://couchdb.apache.org/#download](http://couchdb.apache.org/#download)
 * test service - [http://127.0.0.1:5984/](http://127.0.0.1:5984/)
-
-TODO curl create
-TODO replication
 
 ## Creating database
 
