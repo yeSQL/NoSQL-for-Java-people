@@ -20,7 +20,6 @@
     <dd>Erlang</dd>
     <dt>Default port</dt>
     <dd>5984</dd>
-    <dt>
 </dl>
 
 ## Conflicts
