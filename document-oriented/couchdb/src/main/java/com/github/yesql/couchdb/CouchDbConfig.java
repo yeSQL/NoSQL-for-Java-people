@@ -56,7 +56,7 @@ public class CouchDbConfig extends Config {
         return db;
     }
     @Bean
-    public AnimalDao animalDao(CouchDbConnector couchDbCOnnector) {
+    public AnimalCouchDbDao animalDao(CouchDbConnector couchDbCOnnector) {
         return new AnimalCouchDbDao(couchDbCOnnector);
     }
 }

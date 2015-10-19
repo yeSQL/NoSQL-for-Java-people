@@ -15,7 +15,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.yesql</groupId>
-                <artifactId>nosql</artifactId>
+                <artifactId>dao-integration-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.yesql</groupId>
-            <artifactId>nosql</artifactId>
+            <artifactId>dao-integration-test</artifactId>
         </dependency>
     </dependencies>
 

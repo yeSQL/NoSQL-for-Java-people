@@ -41,4 +41,5 @@
 
 * [**Couchbase Java SDK** 2.1](http://docs.couchbase.com/developer/java-2.1/overview.html)
     * see Compatibility section for features overview
+    * I prefer SDK, Spring Data is too behind Couchbase version and featurs
 * [Spring Data Couchbase](http://projects.spring.io/spring-data-couchbase/)

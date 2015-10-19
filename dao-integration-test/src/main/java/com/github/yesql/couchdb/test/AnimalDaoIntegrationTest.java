@@ -1,4 +1,4 @@
-package com.github.yesql.couchdb.test;
+    package com.github.yesql.couchdb.test;
 
 import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.couchdb.model.Animal;

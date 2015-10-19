@@ -12,6 +12,7 @@
         <module>document-oriented</module>
         <module>key-value</module>
         <module>column-oriented</module>
+        <module>dao-integration-test</module>
     </modules>
 
     <dependencyManagement>
