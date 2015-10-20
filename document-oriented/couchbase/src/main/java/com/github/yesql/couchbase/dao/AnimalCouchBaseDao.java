@@ -14,7 +14,6 @@ import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
