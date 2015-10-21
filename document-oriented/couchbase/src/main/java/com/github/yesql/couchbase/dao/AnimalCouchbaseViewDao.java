@@ -22,8 +22,8 @@ import static com.github.yesql.couchbase.DocumentConverter.convert;
 /**
  * @author Martin Janys
  */
-@Bucket(name = AnimalCouchbaseDao.BUCKET_NAME, type = BucketType.COUCHBASE, design = AnimalCouchbaseDao.DESIGN_NAME)
-public class AnimalCouchbaseDao extends CouchbaseDao implements AnimalDao<CouchbaseAnimal, String>, InitializingBean {
+@Bucket(name = AnimalCouchbaseViewDao.BUCKET_NAME, type = BucketType.COUCHBASE, design = AnimalCouchbaseViewDao.DESIGN_NAME)
+public class AnimalCouchbaseViewDao extends CouchbaseDao implements AnimalDao<CouchbaseAnimal, String>, InitializingBean {
 
     static final String BUCKET_NAME = "animals";
     static final String DESIGN_NAME = "animals";
