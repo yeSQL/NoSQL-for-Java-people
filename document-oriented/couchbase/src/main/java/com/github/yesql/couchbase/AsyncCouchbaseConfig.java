@@ -3,11 +3,11 @@ package com.github.yesql.couchbase;
 import com.couchbase.client.java.AsyncBucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
-import com.github.yesql.couchbase.dao.AnimalCouchbaseAsyncViewDao;
+import com.github.yesql.couchbase.dao.AnimalCouchbaseObservableViewDao;
+import com.github.yesql.couchbase.dao.ObservableCouchbaseDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.Config;
-import com.github.yesql.couchdb.dao.AnimalDao;
-import com.github.yesql.couchdb.dao.FutureToSyncWrapperDao;
+import com.github.yesql.couchdb.dao.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +27,7 @@ public class AsyncCouchbaseConfig extends Config {
     @Value("${couchbase.bucket}") String bucket;
     @Value("${couchbase.nodes}") String[] nodes;
     @Value("${couchbase.password}") String password;
+    @Value("${couchbase.timeout.sec}") long timeout;
 
     @Bean(destroyMethod = "disconnect")
     public Cluster cluster() {
@@ -39,12 +40,17 @@ public class AsyncCouchbaseConfig extends Config {
     }
 
     @Bean
-    public AnimalCouchbaseAsyncViewDao animalAsyncDao() {
-        return new AnimalCouchbaseAsyncViewDao();
+    public ObservableAnimalDao<CouchbaseAnimal, String> observableCouchbaseDao() {
+        return new AnimalCouchbaseObservableViewDao();
     }
 
     @Bean
-    public AnimalDao<CouchbaseAnimal, String> animalDao(AnimalCouchbaseAsyncViewDao asyncViewDao) {
-        return new FutureToSyncWrapperDao<CouchbaseAnimal, String>(asyncViewDao);
+    public AsyncAnimalDao<CouchbaseAnimal, String> asyncAnimalDao(ObservableAnimalDao<CouchbaseAnimal, String> dao) {
+        return new ObservableToFutureWrapperDao<CouchbaseAnimal, String>(dao, timeout);
+    }
+
+    @Bean
+    public AnimalDao<CouchbaseAnimal, String> animalDao(AsyncAnimalDao<CouchbaseAnimal, String> dao) {
+        return new FutureToSyncWrapperDao<CouchbaseAnimal, String>(dao);
     }
 }

@@ -18,5 +18,5 @@ public interface ObservableGenericDao<T, ID extends Serializable> {
     Observable<Boolean> deleteEntry(T o);
 
     Observable<Integer> countAll();
-    Observable<Boolean> deleteAll();
+    Observable<Boolean>  deleteAll();
 }

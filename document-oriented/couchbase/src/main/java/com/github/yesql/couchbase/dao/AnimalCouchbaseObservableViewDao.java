@@ -4,32 +4,26 @@ import com.couchbase.cbadmin.assets.Bucket.BucketType;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
-import com.couchbase.client.java.error.DocumentDoesNotExistException;
 import com.couchbase.client.java.view.AsyncViewResult;
 import com.couchbase.client.java.view.AsyncViewRow;
-import com.couchbase.client.java.view.ViewResult;
-import com.couchbase.client.java.view.ViewRow;
+import com.github.yesql.couchbase.DocumentConverter;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.dao.AsyncAnimalDao;
+import com.github.yesql.couchdb.dao.ObservableAnimalDao;
 import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Action2;
-import rx.functions.Func0;
 import rx.functions.Func1;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 import static com.github.yesql.couchbase.DocumentConverter.convert;
 
 /**
  * @author Martin Janys
  */
-@Bucket(name = AnimalCouchbaseAsyncViewDao.BUCKET_NAME, type = BucketType.COUCHBASE, design = AnimalCouchbaseAsyncViewDao.DESIGN_NAME)
-public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements AsyncAnimalDao<CouchbaseAnimal, String>, InitializingBean {
+@Bucket(name = AnimalCouchbaseObservableViewDao.BUCKET_NAME, type = BucketType.COUCHBASE, design = AnimalCouchbaseObservableViewDao.DESIGN_NAME)
+public class AnimalCouchbaseObservableViewDao extends ObservableCouchbaseDao implements ObservableAnimalDao<CouchbaseAnimal, String>, InitializingBean {
 
     static final String BUCKET_NAME = "animals";
     static final String DESIGN_NAME = "animals";
@@ -38,13 +32,13 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
         autoViews.setup(this);
     }
 
-    public Future<CouchbaseAnimal> findEntry(String id) {
-        return toFuture(get(id, RawJsonDocument.class));
+    public Observable<CouchbaseAnimal> findEntry(String id) {
+        return convert(get(id, RawJsonDocument.class));
     }
 
     @View(name = "all", map = "classpath:/script/animal/map_all.js")
-    public Future<List<CouchbaseAnimal>> findAllEntries() {
-        return toFutureList(query(viewQueryFrom(DESIGN_NAME, "all").includeDocs(true, RawJsonDocument.class)));
+    public Observable<List<CouchbaseAnimal>> findAllEntries() {
+        return convertList(query(viewQueryFrom(DESIGN_NAME, "all").includeDocs(true, RawJsonDocument.class)));
     }
 
     public Observable<String> findAllIds() {
@@ -60,33 +54,32 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
                 });
     }
 
-    public Future<CouchbaseAnimal> saveEntry(CouchbaseAnimal o) {
+    public Observable<CouchbaseAnimal> saveEntry(CouchbaseAnimal o) {
         if (o.getId() != null) {
             throw new IllegalArgumentException("Id must be null");
         }
         o.setId(uuid());
-        return toFuture(insert(convert(o)));
+        return convert(insert(DocumentConverter.convert(o)));
     }
 
-    public Future<CouchbaseAnimal> updateEntry(CouchbaseAnimal o) {
-        RawJsonDocument document = convert(o);
-        return toFuture(replace(document));
+    public Observable<CouchbaseAnimal> updateEntry(CouchbaseAnimal o) {
+        RawJsonDocument document = DocumentConverter.convert(o);
+        return convert(replace(document));
     }
 
-    public Future<Boolean> deleteEntry(String id) {
-        try {
-            return toFutureBoolean(remove(id));
-        }
-        catch (DocumentDoesNotExistException ignored) {
-        }
-        return null;
+    public Observable<Boolean> deleteEntry(String id) {
+        return remove(id).defaultIfEmpty(null).map(new Func1<JsonDocument, Boolean>() {
+            public Boolean call(JsonDocument jsonDocument) {
+                return jsonDocument != null;
+            }
+        });
     }
-    public Future<Boolean> deleteEntry(CouchbaseAnimal o) {
+    public Observable<Boolean> deleteEntry(CouchbaseAnimal o) {
         return deleteEntry(o.getId());
     }
 
     @View(name = "countAll", map = "classpath:/script/animal/map_all.js", reduce = "_count")
-    public Future<Integer> countAll() {
+    public Observable<Integer> countAll() {
         return query(viewQueryFrom(DESIGN_NAME, "countAll"))
                 .flatMap(new Func1<AsyncViewResult, Observable<Integer>>() {
                     public Observable<Integer> call(AsyncViewResult result) {
@@ -97,71 +90,69 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
                         });
                     }
                 })
-                .defaultIfEmpty(0)
-                .timeout(timeout, TimeUnit.SECONDS)
-                .toBlocking()
-                .toFuture();
+                .defaultIfEmpty(0);
     }
 
-    public Future<Boolean> deleteAll() {
+    public Observable<Boolean> deleteAll() {
         return findAllIds()
-                .all(new Func1<String, Boolean>() {
-                    public Boolean call(String id) {
-                        deleteEntry(id);
-                        return true;
+                .flatMap(new Func1<String, Observable<JsonDocument>>() {
+                    public Observable<JsonDocument> call(String id) {
+                        return bucket.remove(id);
                     }
                 })
-                .defaultIfEmpty(false)
-                .timeout(timeout, TimeUnit.SECONDS)
-                .toBlocking()
-                .toFuture();
+                .defaultIfEmpty(null)
+                .all(new Func1<JsonDocument, Boolean>() {
+                    public Boolean call(JsonDocument jsonDocument) {
+                        return jsonDocument != null;
+                    }
+                })
+                .defaultIfEmpty(false);
     }
 
     @View(name = "by_name", map = "classpath:/script/animal/map_by_name.js")
-    public Future<List<CouchbaseAnimal>> findBySpeciesName(String name) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findBySpeciesName(String name) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_name").key(name).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_genusName", map = "classpath:/script/animal/map_by_genusName.js")
-    public Future<List<CouchbaseAnimal>> findByGenusName(String name) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findByGenusName(String name) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_genusName").key(name).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_names", map = "classpath:/script/animal/map_by_names.js")
-    public Future<List<CouchbaseAnimal>> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_names").key(JsonArray.from(speciesName, genusName)).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight", map = "classpath:/script/animal/map_by_weight.js")
-    public Future<List<CouchbaseAnimal>> findByWeight(int weight) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findByWeight(int weight) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight").key(weight).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight_between", map = "classpath:/script/animal/map_by_weight.js")
-    public Future<List<CouchbaseAnimal>> findByWeightBetween(int startWeight, int endWeight) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findByWeightBetween(int startWeight, int endWeight) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight_between").startKey(startWeight).endKey(endWeight).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight_or_length", map = "classpath:/script/animal/map_by_weight_or_length.js")
-    public Future<List<CouchbaseAnimal>> findByWeightOrLength(int size) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findByWeightOrLength(int size) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight_or_length").key(size).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_area", map = "classpath:/script/animal/map_by_area.js")
-    public Future<List<CouchbaseAnimal>> findByArea(String area) {
-        return toFutureList(
+    public Observable<List<CouchbaseAnimal>> findByArea(String area) {
+        return convertList(
                 query(viewQueryFrom(DESIGN_NAME, "by_area").key(area).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_areas", map = "classpath:/script/animal/map_by_area.js")
-    public Future<List<CouchbaseAnimal>> findByAreaIn(String... area) {
-        // todo: uniq document
+    public Observable<List<CouchbaseAnimal>> findByAreaIn(String... area) {
         return extractFromResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_areas").keys(JsonArray.from(area)).includeDocs(true, RawJsonDocument.class)))
                 .distinct(new Func1<CouchbaseAnimal, String>() {
@@ -169,10 +160,7 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
                         return couchbaseAnimal.getId();
                     }
                 })
-                .toList()
-                .timeout(timeout, TimeUnit.SECONDS)
-                .toBlocking()
-                .toFuture();
+                .toList();
     }
 
 }
