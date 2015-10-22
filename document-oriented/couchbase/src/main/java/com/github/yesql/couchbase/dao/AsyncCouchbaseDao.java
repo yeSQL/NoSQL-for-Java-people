@@ -52,12 +52,12 @@ public abstract class AsyncCouchbaseDao {
         });
     }
 
-    protected Observable<List<CouchbaseAnimal>> extractFromResult(Observable<AsyncViewResult> result) {
+    protected Observable<CouchbaseAnimal> extractFromResult(Observable<AsyncViewResult> result) {
         return result.flatMap(new Func1<AsyncViewResult, Observable<CouchbaseAnimal>>() {
             public Observable<CouchbaseAnimal> call(AsyncViewResult asyncViewResult) {
                 return extractFromRows(asyncViewResult.rows());
             }
-        }).toList();
+        });
     }
 
     protected Future<CouchbaseAnimal> toFuture(Observable<RawJsonDocument> observable) {
@@ -69,6 +69,7 @@ public abstract class AsyncCouchbaseDao {
 
     protected Future<List<CouchbaseAnimal>> toFutureList(Observable<AsyncViewResult> asyncViewResultObservable) {
         return extractFromResult(asyncViewResultObservable)
+                .toList()
                 .timeout(timeout, TimeUnit.SECONDS)
                 .toBlocking()
                 .toFuture();

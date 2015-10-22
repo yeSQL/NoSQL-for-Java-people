@@ -9,11 +9,11 @@ import java.util.concurrent.ExecutionException;
 /**
  * @author Martin Janys
  */
-public class AnimalSyncWrapperDao<ANIMAL extends Animal, ID extends Serializable> implements AnimalDao<ANIMAL, ID> {
+public class FutureToSyncWrapperDao<ANIMAL extends Animal, ID extends Serializable> implements AnimalDao<ANIMAL, ID> {
 
     private final AsyncAnimalDao<ANIMAL, ID> asyncAnimalDao;
 
-    public AnimalSyncWrapperDao(AsyncAnimalDao<ANIMAL, ID> asyncAnimalDao) {
+    public FutureToSyncWrapperDao(AsyncAnimalDao<ANIMAL, ID> asyncAnimalDao) {
         this.asyncAnimalDao = asyncAnimalDao;
     }
 

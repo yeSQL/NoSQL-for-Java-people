@@ -164,16 +164,12 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
         // todo: uniq document
         return extractFromResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_areas").keys(JsonArray.from(area)).includeDocs(true, RawJsonDocument.class)))
-                .map(new Func1<List<CouchbaseAnimal>, Set<CouchbaseAnimal>>() {
-                    public Set<CouchbaseAnimal> call(List<CouchbaseAnimal> couchbaseAnimals) {
-                        return new HashSet<CouchbaseAnimal>(couchbaseAnimals);
+                .distinct(new Func1<CouchbaseAnimal, String>() {
+                    public String call(CouchbaseAnimal couchbaseAnimal) {
+                        return couchbaseAnimal.getId();
                     }
                 })
-                .map(new Func1<Set<CouchbaseAnimal>, List<CouchbaseAnimal>>() {
-                    public List<CouchbaseAnimal> call(Set<CouchbaseAnimal> couchbaseAnimals) {
-                        return new ArrayList<CouchbaseAnimal>(couchbaseAnimals);
-                    }
-                })
+                .toList()
                 .timeout(timeout, TimeUnit.SECONDS)
                 .toBlocking()
                 .toFuture();

@@ -7,7 +7,7 @@ import com.github.yesql.couchbase.dao.AnimalCouchbaseAsyncViewDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.Config;
 import com.github.yesql.couchdb.dao.AnimalDao;
-import com.github.yesql.couchdb.dao.AnimalSyncWrapperDao;
+import com.github.yesql.couchdb.dao.FutureToSyncWrapperDao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +45,6 @@ public class AsyncCouchbaseConfig extends Config {
 
     @Bean
     public AnimalDao<CouchbaseAnimal, String> animalDao(AnimalCouchbaseAsyncViewDao asyncViewDao) {
-        return new AnimalSyncWrapperDao<CouchbaseAnimal, String>(asyncViewDao);
+        return new FutureToSyncWrapperDao<CouchbaseAnimal, String>(asyncViewDao);
     }
 }
