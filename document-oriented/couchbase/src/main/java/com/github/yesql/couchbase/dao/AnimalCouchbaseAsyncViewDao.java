@@ -20,12 +20,8 @@ import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 import static com.github.yesql.couchbase.DocumentConverter.convert;
 
@@ -92,12 +88,11 @@ public class AnimalCouchbaseAsyncViewDao extends AsyncCouchbaseDao implements As
     @View(name = "countAll", map = "classpath:/script/animal/map_all.js", reduce = "_count")
     public Future<Integer> countAll() {
         return query(viewQueryFrom(DESIGN_NAME, "countAll"))
-                .defaultIfEmpty(null)
                 .flatMap(new Func1<AsyncViewResult, Observable<Integer>>() {
                     public Observable<Integer> call(AsyncViewResult result) {
-                        return result.rows().first().map(new Func1<AsyncViewRow, Integer>() {
+                        return result.rows().defaultIfEmpty(null).map(new Func1<AsyncViewRow, Integer>() {
                             public Integer call(AsyncViewRow asyncViewRow) {
-                                return (Integer) asyncViewRow.value();
+                                return asyncViewRow != null ? (Integer) asyncViewRow.value() : 0;
                             }
                         });
                     }
