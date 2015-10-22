@@ -4,7 +4,6 @@ import com.couchbase.client.java.AsyncBucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.github.yesql.couchbase.dao.AnimalCouchbaseObservableViewDao;
-import com.github.yesql.couchbase.dao.ObservableCouchbaseDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.Config;
 import com.github.yesql.couchdb.dao.*;

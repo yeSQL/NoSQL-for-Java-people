@@ -36,56 +36,44 @@ public abstract class ObservableCouchbaseDao {
     }
 
     protected Observable<CouchbaseAnimal> convert(Observable<RawJsonDocument> observable) {
-        return observable.map(new Func1<RawJsonDocument, CouchbaseAnimal>() {
-            public CouchbaseAnimal call(RawJsonDocument rawJsonDocument) {
-                return DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class);
-            }
-        });
+        return observable
+                .map(rawJsonDocument -> DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class));
     }
 
     protected Observable<List<CouchbaseAnimal>> convertList(Observable<AsyncViewResult> observable) {
-        return extractFromResult(observable).toList();
+        return extractFromResult(observable)
+                .toList();
     }
 
     protected Observable<CouchbaseAnimal> extractFromDocument(Observable<RawJsonDocument> observable) {
         return observable
-                .map(new Func1<RawJsonDocument, CouchbaseAnimal>() {
-                    public CouchbaseAnimal call(RawJsonDocument rawJsonDocument) {
-                        return DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class);
-                    }
-                });
+                .map(rawJsonDocument -> DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class));
     }
 
     protected Observable<CouchbaseAnimal> extractFromRows(Observable<AsyncViewRow> rows) {
-        return rows.flatMap(new Func1<AsyncViewRow, Observable<CouchbaseAnimal>>() {
-            public Observable<CouchbaseAnimal> call(AsyncViewRow asyncViewRow) {
-                return extractFromDocument(asyncViewRow.document(RawJsonDocument.class));
-            }
-        });
+        return rows
+                .flatMap(asyncViewRow -> extractFromDocument(asyncViewRow.document(RawJsonDocument.class)));
     }
 
     protected Observable<CouchbaseAnimal> extractFromResult(Observable<AsyncViewResult> result) {
-        return result.flatMap(new Func1<AsyncViewResult, Observable<CouchbaseAnimal>>() {
-            public Observable<CouchbaseAnimal> call(AsyncViewResult asyncViewResult) {
-                return extractFromRows(asyncViewResult.rows());
-            }
-        });
+        return result
+                .flatMap(asyncViewResult -> extractFromRows(asyncViewResult.rows()));
     }
 
     protected Future<Void> toFutureVoid(Observable<?> voidObservable) {
-        return voidObservable.first().map(new Func1<Object, Void>() {
-            public Void call(Object o) {
-                return null;
-            }
-        }).toBlocking().toFuture();
+        return voidObservable
+                .first()
+                .map(o -> (Void) null)
+                .toBlocking()
+                .toFuture();
     }
 
     protected Future<Boolean> toFutureBoolean(Observable<?> voidObservable) {
-        return voidObservable.first().map(new Func1<Object, Boolean>() {
-            public Boolean call(Object o) {
-                return true;
-            }
-        }).toBlocking().toFuture();
+        return voidObservable
+                .first()
+                .map(o -> true)
+                .toBlocking()
+                .toFuture();
     }
 
     /**
