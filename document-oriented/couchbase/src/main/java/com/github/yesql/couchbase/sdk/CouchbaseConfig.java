@@ -1,9 +1,9 @@
-package com.github.yesql.couchbase;
+package com.github.yesql.couchbase.sdk;
 
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
-import com.github.yesql.couchbase.dao.AnimalCouchbaseViewDao;
+import com.github.yesql.couchbase.dao.sdk.sync.AnimalCouchbaseViewDao;
 import com.github.yesql.couchdb.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

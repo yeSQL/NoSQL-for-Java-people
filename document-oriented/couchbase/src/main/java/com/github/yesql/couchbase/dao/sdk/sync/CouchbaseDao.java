@@ -1,4 +1,4 @@
-package com.github.yesql.couchbase.dao;
+package com.github.yesql.couchbase.dao.sdk.sync;
 
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.document.Document;

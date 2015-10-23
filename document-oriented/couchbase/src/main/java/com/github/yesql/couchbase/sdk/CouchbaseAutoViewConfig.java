@@ -1,4 +1,4 @@
-package com.github.yesql.couchbase;
+package com.github.yesql.couchbase.sdk;
 
 import com.couchbase.cbadmin.client.CouchbaseAdmin;
 import com.couchbase.cbadmin.client.CouchbaseAdminImpl;
