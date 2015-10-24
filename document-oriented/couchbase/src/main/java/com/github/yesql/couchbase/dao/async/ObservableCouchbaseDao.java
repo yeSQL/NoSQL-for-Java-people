@@ -41,7 +41,7 @@ public abstract class ObservableCouchbaseDao {
 
     protected Observable<List<CouchbaseAnimal>> convertList(Observable<AsyncViewResult> observable) {
         return extractFromResult(observable)
-                .distinct(couchbaseAnimal -> couchbaseAnimal.getId())
+                .distinct(CouchbaseAnimal::getId)
                 .toList();
     }
 

@@ -1,4 +1,4 @@
-package com.github.yesql.couchbase.dao;
+package com.github.yesql.couchbase.dao.ql;
 
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
