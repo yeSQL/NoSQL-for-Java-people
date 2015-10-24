@@ -21,11 +21,14 @@
     <dt>Source code</dt>
     <dd>C and Erlang</dd>
     <dt>Default port</dt>
-    <dd>8091</dd>
+    <dd>
+    8091 - Console,
+    8083 - REST API
+    </dd>
 </dl>
 
 * Couchbase supports join operation
-* Experimental query language [N1QL](http://query.pub.couchbase.com/tutorial)
+* Query by views or with query language [N1QL](http://query.pub.couchbase.com/tutorial)
 * It keeps frequently accessed documents, metadata, and indexes in RAM
 
 ## Install
@@ -37,9 +40,17 @@
 
 * GUI management - [http://localhost:8091/](http://localhost:8091/)
 
+## Indexes
+
+* for N1QL queries primary index is required
+    * run CLI tool cbq witch is located in couchbase/server/bin
+    * run script ```CREATE PRIMARY INDEX idx_id ON animals(`id`) USING GSI;```
+
 ## Java interfaces
 
-* [**Couchbase Java SDK** 2.1](http://docs.couchbase.com/developer/java-2.1/overview.html)
+* create views from your code using annotation [couchbase-auto-views](https://github.com/biins/couchbase-auto-views)
+* [**Couchbase Java SDK** 2.2+](http://docs.couchbase.com/developer/java-2.1/overview.html)
     * see Compatibility section for features overview
-    * I prefer SDK, Spring Data is too behind Couchbase version and featurs
+    * dao using synch. blocking implementation, asyn. nonblocking implementation and N1QL dao is implemented
 * [Spring Data Couchbase](http://projects.spring.io/spring-data-couchbase/)
+    * useful for blocking daos and basic POJO access
