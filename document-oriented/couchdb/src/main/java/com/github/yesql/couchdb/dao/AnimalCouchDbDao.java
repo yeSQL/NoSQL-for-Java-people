@@ -106,7 +106,12 @@ public class AnimalCouchDbDao extends CouchDbRepositorySupport<CouchDbAnimal> im
 
     @View(name = "by_weight_or_length", map = "classpath:/script/animal/map_by_weight_or_length.js")
     public List<CouchDbAnimal> findByWeightOrLength(int size) {
-        return db.queryView(createQuery("by_weight_or_length").key(size).includeDocs(true), CouchDbAnimal.class);
+        // todo use uniq doc id
+        return new ArrayList<CouchDbAnimal>(
+                new HashSet<CouchDbAnimal>(
+                        db.queryView(createQuery("by_weight_or_length").key(size).includeDocs(true), CouchDbAnimal.class)
+                )
+        );
     }
 
     @View(name = "by_area", map = "classpath:/script/animal/map_by_area.js")
