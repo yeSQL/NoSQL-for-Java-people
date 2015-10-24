@@ -30,6 +30,7 @@
 * Couchbase supports join operation
 * Query by views or with query language [N1QL](http://query.pub.couchbase.com/tutorial)
 * It keeps frequently accessed documents, metadata, and indexes in RAM
+* Couchbase supports joins and references. Reference has pattern ```person::id```
 
 ## Install
 

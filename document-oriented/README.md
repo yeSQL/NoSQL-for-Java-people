@@ -15,6 +15,7 @@
 * you need better performance for data access
     * for example CouchDB uses key-value strengths and precomputation of views
 * you need to raise resiliency by replication
+* you can send stored data directly to front-end javascript
 
 **When DON'T use document databases**
 
