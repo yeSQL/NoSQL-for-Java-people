@@ -13,6 +13,7 @@ import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import org.biins.cauchbase.AutoViews;
 import org.springframework.beans.factory.annotation.Autowired;
 import rx.Observable;
+import rx.functions.Func1;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,7 @@ public abstract class ObservableCouchbaseDao {
 
     protected Observable<List<CouchbaseAnimal>> convertList(Observable<AsyncViewResult> observable) {
         return extractFromResult(observable)
+                .distinct(couchbaseAnimal -> couchbaseAnimal.getId())
                 .toList();
     }
 

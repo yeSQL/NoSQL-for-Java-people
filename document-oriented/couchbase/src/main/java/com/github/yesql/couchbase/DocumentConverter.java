@@ -4,10 +4,9 @@ import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.view.ViewRow;
 import com.github.yesql.couchdb.Identifiable;
 import com.google.gson.Gson;
+import rx.Observable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Martin Janys
@@ -26,11 +25,11 @@ public class DocumentConverter {
     }
 
     public static <T> List<T> convert(Collection<ViewRow> viewRows, Class<T> targetType) {
-        ArrayList<T> result = new ArrayList<T>(viewRows.size());
+        Set<T> result = new HashSet<>(viewRows.size());
         for (ViewRow viewRow : viewRows) {
             result.add(convert(viewRow, targetType));
         }
-        return result;
+        return new ArrayList<>(result);
     }
 
     public static RawJsonDocument convert(Identifiable<String> obj) {
@@ -44,5 +43,9 @@ public class DocumentConverter {
             result.add(convert(obj));
         }
         return result;
+    }
+
+    public static <T> T convert(String s, Class<T> cls) {
+        return gson.fromJson(s, cls);
     }
 }

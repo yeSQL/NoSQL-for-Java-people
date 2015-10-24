@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -141,12 +142,15 @@ public abstract class AnimalDaoIntegrationTest extends AnimalDaoTestBase {
 
     @Test(groups = "read", dependsOnGroups = "create")
     public void testFindByWeightOrLength() throws Exception {
-        List<Animal> animals = dao.findByWeightOrLength(5);
+        List<Animal> animals = dao.findByWeightOrLength(4);
 
         assertEquals(animals.size(), 2);
         for (Animal animal : animals) {
             assertEquals(compareAnimal(animal, buildAnimalResult(animal.getSpeciesName())), 0);
         }
+
+        animals = dao.findByWeightOrLength(5);
+        assertEquals(animals.size(), 1);
     }
 
     @Test(groups = "read", dependsOnGroups = "create")
@@ -184,17 +188,17 @@ public abstract class AnimalDaoIntegrationTest extends AnimalDaoTestBase {
     @Test(dependsOnGroups = "read", alwaysRun = true)
     public void testDeleteAll() {
         List<Animal> allEntries = dao.findAllEntries();
-        int count = allEntries.size();
+
         dao.deleteEntry(allEntries.get(0));
 
-        assertEquals(dao.countAll(), count - 1);
+        assertEquals(dao.countAll(), dao.findAllEntries().size());
 
         dao.deleteAll();
 
         assertEquals(dao.countAll(), 0);
     }
 
-    @Test(dependsOnMethods = "testDeleteAll", alwaysRun = true)
+    @AfterSuite
     public void cleanup() {
         dao.deleteAll();
     }
