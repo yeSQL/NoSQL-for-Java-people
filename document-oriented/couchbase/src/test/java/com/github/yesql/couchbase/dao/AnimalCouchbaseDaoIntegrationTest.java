@@ -1,6 +1,6 @@
-package com.github.yesql.couchbase.dao.sdk;
+package com.github.yesql.couchbase.dao;
 
-import com.github.yesql.couchbase.sdk.CouchbaseConfig;
+import com.github.yesql.couchbase.CouchbaseConfig;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.model.Animal;
 import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;

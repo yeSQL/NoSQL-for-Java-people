@@ -1,4 +1,4 @@
-package com.github.yesql.couchbase.dao.sdk.async;
+package com.github.yesql.couchbase.dao.async;
 
 import com.couchbase.cbadmin.assets.Bucket.BucketType;
 import com.couchbase.client.java.document.JsonDocument;

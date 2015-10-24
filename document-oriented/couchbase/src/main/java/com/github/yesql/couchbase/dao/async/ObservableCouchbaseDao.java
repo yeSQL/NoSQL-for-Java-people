@@ -1,4 +1,4 @@
-package com.github.yesql.couchbase.dao.sdk.async;
+package com.github.yesql.couchbase.dao.async;
 
 import com.couchbase.client.java.AsyncBucket;
 import com.couchbase.client.java.document.Document;
@@ -13,7 +13,6 @@ import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import org.biins.cauchbase.AutoViews;
 import org.springframework.beans.factory.annotation.Autowired;
 import rx.Observable;
-import rx.functions.Func1;
 
 import java.util.List;
 import java.util.UUID;

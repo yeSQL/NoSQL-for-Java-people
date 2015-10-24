@@ -1,6 +1,5 @@
 package com.github.yesql.couchdb;
 
-import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.couchdb.dao.AnimalCouchDbDao;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
@@ -22,7 +22,8 @@ import java.net.MalformedURLException;
  */
 @Configuration
 @PropertySource("classpath:couchdb.properties")
-public class CouchDbConfig extends Config {
+@Import(PropertyPlaceHolderConfiguration.class)
+public class CouchDbConfig {
     @Autowired
     Environment environment;
     @Value("${couchdb.name}") String dbName;

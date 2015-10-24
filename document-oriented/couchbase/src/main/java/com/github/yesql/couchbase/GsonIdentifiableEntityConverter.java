@@ -2,16 +2,10 @@ package com.github.yesql.couchbase;
 
 import com.couchbase.client.java.document.EntityDocument;
 import com.couchbase.client.java.document.JsonDocument;
-import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
-import com.couchbase.client.java.repository.mapping.*;
+import com.couchbase.client.java.repository.mapping.DefaultEntityConverter;
 import com.github.yesql.couchdb.Identifiable;
 import com.google.gson.Gson;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Martin Janys

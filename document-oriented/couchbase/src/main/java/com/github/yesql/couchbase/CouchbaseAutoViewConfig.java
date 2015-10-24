@@ -1,12 +1,13 @@
-package com.github.yesql.couchbase.sdk;
+package com.github.yesql.couchbase;
 
 import com.couchbase.cbadmin.client.CouchbaseAdmin;
 import com.couchbase.cbadmin.client.CouchbaseAdminImpl;
-import com.github.yesql.couchdb.Config;
+import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
 import org.biins.cauchbase.AutoViews;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
 import java.net.MalformedURLException;
@@ -17,7 +18,8 @@ import java.net.URL;
  */
 @Configuration
 @PropertySource("classpath:/couchbase.properties")
-public class CouchbaseAutoViewConfig extends Config {
+@Import(PropertyPlaceHolderConfiguration.class)
+public class CouchbaseAutoViewConfig {
 
     @Value("${couchbase.admin.node}") String node;
     @Value("${couchbase.admin.username}") String username;

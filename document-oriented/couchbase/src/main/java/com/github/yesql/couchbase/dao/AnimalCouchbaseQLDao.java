@@ -8,6 +8,7 @@ import com.couchbase.client.java.query.QueryParams;
 import com.couchbase.client.java.query.QueryResult;
 import com.couchbase.client.java.query.QueryRow;
 import com.couchbase.client.java.query.consistency.ScanConsistency;
+import com.github.yesql.couchbase.dao.ql.CouchbaseQLDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.dao.AnimalDao;
 import com.google.gson.Gson;

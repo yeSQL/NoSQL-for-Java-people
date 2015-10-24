@@ -1,6 +1,6 @@
-package com.github.yesql.couchbase.dao.sdk;
+package com.github.yesql.couchbase.dao;
 
-import com.github.yesql.couchbase.sdk.AsyncCouchbaseConfig;
+import com.github.yesql.couchbase.AsyncCouchbaseConfig;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
