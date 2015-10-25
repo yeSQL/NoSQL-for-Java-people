@@ -16,11 +16,14 @@
     * for example CouchDB uses key-value strengths and precomputation of views
 * you need to raise resiliency by replication
 * you can send stored data directly to front-end javascript
+* document databases might stores object instead of session
+* db could store analytic data and views
+* some dbs use light-weight replicas so could be used as offline-online application database. For example in mobile devices
 
 **When DON'T use document databases**
 
 * you don't have reason, don't solve problem which you haven't yet
-* you have lots of ad-hoc queries on database
+* you have lots of ad-hoc queries on database (or use nosql with elesticseach connector for ad-hoc queries)
 
 **Finally** you should benefit from pos and cons of both databases (no-sql and sql)
 

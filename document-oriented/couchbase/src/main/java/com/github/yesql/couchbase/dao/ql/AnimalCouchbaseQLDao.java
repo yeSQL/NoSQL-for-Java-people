@@ -1,5 +1,6 @@
 package com.github.yesql.couchbase.dao.ql;
 
+import com.couchbase.client.java.document.AbstractDocument;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
@@ -8,11 +9,21 @@ import com.couchbase.client.java.query.QueryParams;
 import com.couchbase.client.java.query.QueryResult;
 import com.couchbase.client.java.query.QueryRow;
 import com.couchbase.client.java.query.consistency.ScanConsistency;
+import com.couchbase.client.java.view.Stale;
+import com.couchbase.client.java.view.ViewQuery;
+import com.couchbase.client.java.view.ViewRow;
 import com.github.yesql.couchbase.dao.ql.CouchbaseQLDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.dao.AnimalDao;
 import com.google.gson.Gson;
+import org.biins.cauchbase.AutoViews;
+import org.biins.cauchbase.Bucket;
+import org.biins.cauchbase.View;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -23,14 +34,28 @@ import static com.couchbase.client.java.query.Query.simple;
 /**
  * @author Martin Janys
  */
+@Bucket(name = AnimalCouchbaseQLDao.BUCKET_NAME, type = com.couchbase.cbadmin.assets.Bucket.BucketType.COUCHBASE, design = AnimalCouchbaseQLDao.DESIGN_NAME)
 public class AnimalCouchbaseQLDao extends CouchbaseQLDao<CouchbaseAnimal> implements AnimalDao<CouchbaseAnimal, String> {
+
+    static final String BUCKET_NAME = "animals";
+    static final String DESIGN_NAME = "animals";
 
     private static final Gson gson = new Gson();
     private static final long SCAN_WAIT_MILLISEC = 600;
     private static final QueryParams QUERY_PARAMS = QueryParams.build().consistency(ScanConsistency.REQUEST_PLUS).scanWait(SCAN_WAIT_MILLISEC, TimeUnit.MILLISECONDS);
 
+    @Value("${couchbase.development.views}")
+    private boolean developmentViews;
+    @Autowired
+    private AutoViews autoViews;
+
     public AnimalCouchbaseQLDao() {
         super(CouchbaseAnimal.class);
+    }
+
+    @PostConstruct
+    public void postConstruct() throws Exception {
+        autoViews.setup(this);
     }
 
     public CouchbaseAnimal findEntry(String id) {
@@ -43,13 +68,23 @@ public class AnimalCouchbaseQLDao extends CouchbaseQLDao<CouchbaseAnimal> implem
                 bucket.query(simple("SELECT * FROM animals", QUERY_PARAMS)));
     }
 
+    @View(name = "all", map = "classpath:/script/animal/map_all.js")
     public List<String> findAllIds() {
+        /** find all (consistent) by view with stale false (stale false force reindex) */
+        return bucket.query(ViewQuery.from(DESIGN_NAME, "all").stale(Stale.FALSE).development(developmentViews))
+                .allRows()
+                .stream()
+                .map(ViewRow::document)
+                .map(AbstractDocument::id)
+                .collect(Collectors.toList());
+        /** n1ql provides eventual consistency
         return bucket.query(simple("SELECT id FROM animals"))
                 .allRows()
                 .stream()
                 .map(QueryRow::value)
                 .map(jsonObject -> String.valueOf(jsonObject.get("id")))
                 .collect(Collectors.toList());
+         */
     }
 
     public CouchbaseAnimal saveEntry(CouchbaseAnimal o) {

@@ -41,19 +41,19 @@ public class AnimalCouchbaseQLDaoIntegrationTest extends AnimalDaoIntegrationTes
         }
     }
 
-    @Override
-    @Test(dependsOnGroups = "read", alwaysRun = true, timeOut = 5000)
+    @Test(dependsOnGroups = "read", alwaysRun = true)
     public void testDeleteAll() {
         List<Animal> allEntries = dao.findAllEntries();
-
+        int count = dao.countAll();
         dao.deleteEntry(allEntries.get(0));
 
-        //noinspection StatementWithEmptyBody
-        while (!Objects.equals(dao.countAll(), dao.findAllEntries().size()))
-            ;
+        dao.countAll();
+        assertEquals(dao.countAll(), count - 1);
 
-        //noinspection StatementWithEmptyBody
-        while (!Objects.equals(dao.countAll(), 0))
-            ;
+        dao.deleteAll();
+
+        dao.countAll();
+        assertEquals(dao.countAll(), 0);
     }
+
 }

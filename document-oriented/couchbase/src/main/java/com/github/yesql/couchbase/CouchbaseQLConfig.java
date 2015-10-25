@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:/couchbase.properties")
 @Import({PropertyPlaceHolderConfiguration.class, CouchbaseAutoViewConfig.class})
-public class CouchbaseQLConfig extends CouchbaseConfig{
+public class CouchbaseQLConfig extends CouchbaseConfig {
 
     @Bean
     public AnimalCouchbaseQLDao animalDao() {

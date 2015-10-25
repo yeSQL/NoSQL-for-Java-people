@@ -188,10 +188,10 @@ public abstract class AnimalDaoIntegrationTest extends AnimalDaoTestBase {
     @Test(dependsOnGroups = "read", alwaysRun = true)
     public void testDeleteAll() {
         List<Animal> allEntries = dao.findAllEntries();
-
+        int count = dao.countAll();
         dao.deleteEntry(allEntries.get(0));
 
-        assertEquals(dao.countAll(), dao.findAllEntries().size());
+        assertEquals(dao.countAll(), count - 1);
 
         dao.deleteAll();
 

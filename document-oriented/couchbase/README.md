@@ -55,3 +55,17 @@
     * dao using synch. blocking implementation, asyn. nonblocking implementation and N1QL dao is implemented
 * [Spring Data Couchbase](http://projects.spring.io/spring-data-couchbase/)
     * useful for blocking daos and basic POJO access
+
+## View map example
+
+```
+function (doc, meta) {
+  if(meta.type == "json") {
+    if(doc.doc_type && doc.doc_type == "user") {
+      if(doc.join_date) {
+       emit(dateToArray(doc.join_date)); // value is optinal
+      }
+    }
+  }
+}
+```
