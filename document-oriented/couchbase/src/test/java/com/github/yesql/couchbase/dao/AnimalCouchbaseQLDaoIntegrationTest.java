@@ -41,7 +41,7 @@ public class AnimalCouchbaseQLDaoIntegrationTest extends AnimalDaoIntegrationTes
         }
     }
 
-    @Test(dependsOnGroups = "read", alwaysRun = true)
+    @Override
     public void testDeleteAll() {
         List<Animal> allEntries = dao.findAllEntries();
         int count = dao.countAll();

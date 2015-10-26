@@ -39,10 +39,9 @@ public abstract class ObservableCouchbaseDao {
                 .map(rawJsonDocument -> DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class));
     }
 
-    protected Observable<List<CouchbaseAnimal>> convertList(Observable<AsyncViewResult> observable) {
+    protected Observable<CouchbaseAnimal> convertViewResult(Observable<AsyncViewResult> observable) {
         return extractFromResult(observable)
-                .distinct(CouchbaseAnimal::getId)
-                .toList();
+                .distinct(CouchbaseAnimal::getId);
     }
 
     protected Observable<CouchbaseAnimal> extractFromDocument(Observable<RawJsonDocument> observable) {

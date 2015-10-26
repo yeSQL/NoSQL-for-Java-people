@@ -11,9 +11,9 @@ import java.util.List;
 public interface ObservableGenericDao<T, ID extends Serializable> {
 
     Observable<T> findEntry(ID id);
-    Observable<List<T>> findAllEntries();
-    Observable<T> saveEntry(T o);
-    Observable<T> updateEntry(T o);
+    Observable<T> findAllEntries();
+    Observable<ID> saveEntry(T o);
+    Observable<ID> updateEntry(T o);
     Observable<Boolean> deleteEntry(ID id);
     Observable<Boolean> deleteEntry(T o);
 

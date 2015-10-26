@@ -36,18 +36,19 @@ public class FutureToSyncWrapperDao<ANIMAL extends Animal, ID extends Serializab
         }
     }
 
-    public ANIMAL saveEntry(ANIMAL animal) {
+    @SuppressWarnings("unchecked")
+    public ID saveEntry(ANIMAL animal) {
         try {
-            return asyncAnimalDao.saveEntry(animal).get();
+            return (ID) asyncAnimalDao.saveEntry(animal).get();
         }
         catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ANIMAL updateEntry(ANIMAL animal) {
+    public void updateEntry(ANIMAL animal) {
         try {
-            return asyncAnimalDao.updateEntry(animal).get();
+            asyncAnimalDao.updateEntry(animal).get();
         }
         catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package com.github.yesql.couchbase.dao.async;
 
 import com.couchbase.cbadmin.assets.Bucket.BucketType;
+import com.couchbase.client.java.document.AbstractDocument;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
@@ -37,8 +38,8 @@ public class AnimalCouchbaseObservableViewJ7Dao extends ObservableCouchbaseDao i
     }
 
     @View(name = "all", map = "classpath:/script/animal/map_all.js")
-    public Observable<List<CouchbaseAnimal>> findAllEntries() {
-        return convertList(query(viewQueryFrom(DESIGN_NAME, "all").includeDocs(true, RawJsonDocument.class)));
+    public Observable<CouchbaseAnimal> findAllEntries() {
+        return convertViewResult(query(viewQueryFrom(DESIGN_NAME, "all").includeDocs(true, RawJsonDocument.class)));
     }
 
     public Observable<String> findAllIds() {
@@ -54,17 +55,23 @@ public class AnimalCouchbaseObservableViewJ7Dao extends ObservableCouchbaseDao i
                 });
     }
 
-    public Observable<CouchbaseAnimal> saveEntry(CouchbaseAnimal o) {
+    public Observable<String> saveEntry(CouchbaseAnimal o) {
         if (o.getId() != null) {
             throw new IllegalArgumentException("Id must be null");
         }
         o.setId(uuid());
-        return convert(insert(DocumentConverter.convert(o)));
+        Observable<RawJsonDocument> insert = insert(DocumentConverter.convert(o));
+        return insert
+                .single()
+                .map(AbstractDocument::id);
     }
 
-    public Observable<CouchbaseAnimal> updateEntry(CouchbaseAnimal o) {
+    public Observable<String> updateEntry(CouchbaseAnimal o) {
         RawJsonDocument document = DocumentConverter.convert(o);
-        return convert(replace(document));
+        Observable<RawJsonDocument> replace = replace(document);
+        return replace
+                .single()
+                .map(AbstractDocument::id);
     }
 
     public Observable<Boolean> deleteEntry(String id) {
@@ -110,57 +117,56 @@ public class AnimalCouchbaseObservableViewJ7Dao extends ObservableCouchbaseDao i
     }
 
     @View(name = "by_name", map = "classpath:/script/animal/map_by_name.js")
-    public Observable<List<CouchbaseAnimal>> findBySpeciesName(String name) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findBySpeciesName(String name) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_name").key(name).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_genusName", map = "classpath:/script/animal/map_by_genusName.js")
-    public Observable<List<CouchbaseAnimal>> findByGenusName(String name) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findByGenusName(String name) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_genusName").key(name).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_names", map = "classpath:/script/animal/map_by_names.js")
-    public Observable<List<CouchbaseAnimal>> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_names").key(JsonArray.from(speciesName, genusName)).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight", map = "classpath:/script/animal/map_by_weight.js")
-    public Observable<List<CouchbaseAnimal>> findByWeight(int weight) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findByWeight(int weight) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight").key(weight).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight_between", map = "classpath:/script/animal/map_by_weight.js")
-    public Observable<List<CouchbaseAnimal>> findByWeightBetween(int startWeight, int endWeight) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findByWeightBetween(int startWeight, int endWeight) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight_between").startKey(startWeight).endKey(endWeight).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_weight_or_length", map = "classpath:/script/animal/map_by_weight_or_length.js")
-    public Observable<List<CouchbaseAnimal>> findByWeightOrLength(int size) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findByWeightOrLength(int size) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_weight_or_length").key(size).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_area", map = "classpath:/script/animal/map_by_area.js")
-    public Observable<List<CouchbaseAnimal>> findByArea(String area) {
-        return convertList(
+    public Observable<CouchbaseAnimal> findByArea(String area) {
+        return convertViewResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_area").key(area).includeDocs(true, RawJsonDocument.class)));
     }
 
     @View(name = "by_areas", map = "classpath:/script/animal/map_by_area.js")
-    public Observable<List<CouchbaseAnimal>> findByAreaIn(String... area) {
+    public Observable<CouchbaseAnimal> findByAreaIn(String... area) {
         return extractFromResult(
                 query(viewQueryFrom(DESIGN_NAME, "by_areas").keys(JsonArray.from(area)).includeDocs(true, RawJsonDocument.class)))
                 .distinct(new Func1<CouchbaseAnimal, String>() {
                     public String call(CouchbaseAnimal couchbaseAnimal) {
                         return couchbaseAnimal.getId();
                     }
-                })
-                .toList();
+                });
     }
 
 }

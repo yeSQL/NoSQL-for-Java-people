@@ -87,17 +87,17 @@ public class AnimalCouchbaseQLDao extends CouchbaseQLDao<CouchbaseAnimal> implem
          */
     }
 
-    public CouchbaseAnimal saveEntry(CouchbaseAnimal o) {
+    public String saveEntry(CouchbaseAnimal o) {
         o.setId(uuid());
         RawJsonDocument insert = bucket.insert(RawJsonDocument.create(o.getId(), gson.toJson(o)));
-        return gson.fromJson(insert.content(), entityType);
+        return insert.id();
     }
 
-    public CouchbaseAnimal updateEntry(CouchbaseAnimal o) {
+    public void updateEntry(CouchbaseAnimal o) {
         RawJsonDocument upsert = bucket.upsert(
                 RawJsonDocument.create(o.getId(), gson.toJson(o))
         );
-        return gson.fromJson(upsert.content(), entityType);
+        upsert.content();
     }
 
     public void deleteEntry(String id) {

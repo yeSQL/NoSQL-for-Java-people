@@ -34,14 +34,14 @@ public class ObservableToFutureWrapperDao<ANIMAL extends Animal, ID extends Seri
     }
 
     public Future<List<ANIMAL>> findAllEntries() {
-        return toFuture(observableAnimalDao.findAllEntries());
+        return toFuture(observableAnimalDao.findAllEntries().toList());
     }
 
-    public Future<ANIMAL> saveEntry(ANIMAL animal) {
+    public Future<ID> saveEntry(ANIMAL animal) {
         return toFuture(observableAnimalDao.saveEntry(animal));
     }
 
-    public Future<ANIMAL> updateEntry(ANIMAL animal) {
+    public Future<ID> updateEntry(ANIMAL animal) {
         return toFuture(observableAnimalDao.updateEntry(animal));
     }
 
@@ -62,34 +62,34 @@ public class ObservableToFutureWrapperDao<ANIMAL extends Animal, ID extends Seri
     }
 
     public Future<List<ANIMAL>> findBySpeciesName(String name) {
-        return toFuture(observableAnimalDao.findBySpeciesName(name));
+        return toFuture(observableAnimalDao.findBySpeciesName(name).toList());
     }
 
     public Future<List<ANIMAL>> findByGenusName(String name) {
-        return toFuture(observableAnimalDao.findByGenusName(name));
+        return toFuture(observableAnimalDao.findByGenusName(name).toList());
     }
 
     public Future<List<ANIMAL>> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
-        return toFuture(observableAnimalDao.findBySpeciesNameAndGenusName(speciesName, genusName));
+        return toFuture(observableAnimalDao.findBySpeciesNameAndGenusName(speciesName, genusName).toList());
     }
 
     public Future<List<ANIMAL>> findByWeight(int weight) {
-        return toFuture(observableAnimalDao.findByWeight(weight));
+        return toFuture(observableAnimalDao.findByWeight(weight).toList());
     }
 
     public Future<List<ANIMAL>> findByWeightBetween(int startWeight, int endWeight) {
-        return toFuture(observableAnimalDao.findByWeightBetween(startWeight, endWeight));
+        return toFuture(observableAnimalDao.findByWeightBetween(startWeight, endWeight).toList());
     }
 
     public Future<List<ANIMAL>> findByWeightOrLength(int size) {
-        return toFuture(observableAnimalDao.findByWeightOrLength(size));
+        return toFuture(observableAnimalDao.findByWeightOrLength(size).toList());
     }
 
     public Future<List<ANIMAL>> findByArea(String area) {
-        return toFuture(observableAnimalDao.findByArea(area));
+        return toFuture(observableAnimalDao.findByArea(area).toList());
     }
 
     public Future<List<ANIMAL>> findByAreaIn(String... area) {
-        return toFuture(observableAnimalDao.findByAreaIn(area));
+        return toFuture(observableAnimalDao.findByAreaIn(area).toList());
     }
 }

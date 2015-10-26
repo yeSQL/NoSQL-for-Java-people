@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface ObservableAnimalDao<ANIMAL extends Animal, ID extends Serializable> extends ObservableGenericDao<ANIMAL, ID> {
 
-    Observable<List<ANIMAL>> findBySpeciesName(String name);
-    Observable<List<ANIMAL>> findByGenusName(String name);
-    Observable<List<ANIMAL>> findBySpeciesNameAndGenusName(String speciesName, String genusName);
-    Observable<List<ANIMAL>> findByWeight(int weight);
-    Observable<List<ANIMAL>> findByWeightBetween(int startWeight, int endWeight);
-    Observable<List<ANIMAL>> findByWeightOrLength(int size);
-    Observable<List<ANIMAL>> findByArea(String area);
-    Observable<List<ANIMAL>> findByAreaIn(String... area);
+    Observable<ANIMAL> findBySpeciesName(String name);
+    Observable<ANIMAL> findByGenusName(String name);
+    Observable<ANIMAL> findBySpeciesNameAndGenusName(String speciesName, String genusName);
+    Observable<ANIMAL> findByWeight(int weight);
+    Observable<ANIMAL> findByWeightBetween(int startWeight, int endWeight);
+    Observable<ANIMAL> findByWeightOrLength(int size);
+    Observable<ANIMAL> findByArea(String area);
+    Observable<ANIMAL> findByAreaIn(String... area);
 
 }

@@ -2,6 +2,8 @@
 [http://www.couchbase.com/](http://www.couchbase.com/)
 
 <dl>
+    <dt>Licence</dt>
+    <dd>Apa</dd>
     <dt>Licence CE</dt>
     <dd><a href="http://www.couchbase.com/community">Couchbase, Inc. Community Edition License</a></dd>
     <dt>Licence EE</dt>

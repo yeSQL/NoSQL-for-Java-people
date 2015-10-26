@@ -53,19 +53,18 @@ public class AnimalCouchbaseViewDao extends CouchbaseDao implements AnimalDao<Co
         return result;
     }
 
-    public CouchbaseAnimal saveEntry(CouchbaseAnimal o) {
+    public String saveEntry(CouchbaseAnimal o) {
         if (o.getId() != null) {
             throw new IllegalArgumentException("Id must be null");
         }
         o.setId(uuid());
         RawJsonDocument document = insert(convert(o));
-        return convert(document, CouchbaseAnimal.class);
+        return document.id();
     }
 
-    public CouchbaseAnimal updateEntry(CouchbaseAnimal o) {
+    public void updateEntry(CouchbaseAnimal o) {
         RawJsonDocument document = convert(o);
         document = replace(document);
-        return convert(document, CouchbaseAnimal.class);
     }
 
     public void deleteEntry(String id) {
@@ -145,8 +144,8 @@ public class AnimalCouchbaseViewDao extends CouchbaseDao implements AnimalDao<Co
     public List<CouchbaseAnimal> findByAreaIn(String... area) {
         // todo: uniq document
         ViewResult viewResult = query(viewQueryFrom(DESIGN_NAME, "by_areas").keys(JsonArray.from(area)).includeDocs(true, RawJsonDocument.class));
-        return new ArrayList<CouchbaseAnimal>(
-                new HashSet<CouchbaseAnimal>(
+        return new ArrayList<>(
+                new HashSet<>(
                         convert(viewResult.allRows(), CouchbaseAnimal.class)
                 )
         );

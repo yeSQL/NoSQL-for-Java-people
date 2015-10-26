@@ -10,8 +10,8 @@ public interface GenericDao<T, ID extends Serializable> {
 
     T findEntry(ID id);
     List<T> findAllEntries();
-    T saveEntry(T o);
-    T updateEntry(T o);
+    ID saveEntry(T o);
+    void updateEntry(T o);
     void deleteEntry(ID id);
     void deleteEntry(T o);
 

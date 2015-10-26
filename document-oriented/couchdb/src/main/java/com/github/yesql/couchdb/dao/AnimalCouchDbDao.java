@@ -35,22 +35,21 @@ public class AnimalCouchDbDao extends CouchDbRepositorySupport<CouchDbAnimal> im
         return get(id);
     }
 
-    public CouchDbAnimal saveEntry(CouchDbAnimal animal) {
+    public String saveEntry(CouchDbAnimal animal) {
         /**
          * ! You should do UUID in app (prefer than in DB) this prevents double entry creation if DB fails
          */
         animal.setId(UUID.randomUUID().toString());
         add(animal);
-        return animal;
+        return animal.getId();
     }
 
     public void update(CouchDbAnimal animal) {
         super.update(animal);
     }
 
-    public CouchDbAnimal updateEntry(CouchDbAnimal animal) {
+    public void updateEntry(CouchDbAnimal animal) {
         update(animal);
-        return animal;
     }
 
     public void deleteEntry(String id) {
