@@ -2,6 +2,7 @@ package com.github.yesql.couchbase.dao.async;
 
 import com.couchbase.cbadmin.assets.Bucket.BucketType;
 import com.couchbase.client.java.document.AbstractDocument;
+import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.view.AsyncViewRow;
@@ -12,7 +13,9 @@ import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;
 import rx.Observable;
+import rx.functions.Func1;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -36,6 +39,13 @@ public class AnimalCouchbaseObservableViewDao extends ObservableCouchbaseDao imp
     public Observable<CouchbaseAnimal> findAllEntries() {
         return convertViewResult(query(viewQueryFrom(DESIGN_NAME, "all")
                 .includeDocs(true, RawJsonDocument.class)));
+    }
+
+    public Observable<CouchbaseAnimal> findAllEntries(final Collection<String> ids) {
+        return Observable
+                .from(ids)
+                .flatMap(id -> bucket.get(id, RawJsonDocument.class))
+                .map(rawJsonDocument -> DocumentConverter.convert(rawJsonDocument, CouchbaseAnimal.class));
     }
 
     public Observable<String> findAllIds() {

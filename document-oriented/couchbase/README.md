@@ -71,3 +71,8 @@ function (doc, meta) {
   }
 }
 ```
+
+## REST API
+```
+http://localhost:8092/animals/_design/dev_animals/_view/all
+```

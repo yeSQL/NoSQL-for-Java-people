@@ -1,4 +1,4 @@
-# CauchDB
+# CouchDB
 [http://couchdb.apache.org](http://couchdb.apache.org)
 
 <dl>
