@@ -7,10 +7,9 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Martin Janys
@@ -20,15 +19,48 @@ import javax.persistence.Table;
 @TypeDefs({
         @TypeDef(name = JsonbType.NAME, typeClass = JsonbType.class)
 })
-public class PosgreSQLAnimalEntity {
+public class PosgreSQLAnimalEntity implements Serializable {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @Column(name = "animal")
     @Type(type = JsonbType.NAME, parameters = {@Parameter(name = JsonbType.CLASS, value = "com.github.yesql.couchbase.postgresql.model.PostgreSQLAnimal")})
     private PostgreSQLAnimal animal;
 
-    public PosgreSQLAnimalEntity() {
+    @PostPersist
+    @PostLoad
+    public void postLoad(){
+        animal.setId(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PosgreSQLAnimalEntity that = (PosgreSQLAnimalEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PostgreSQLAnimal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(PostgreSQLAnimal animal) {
+        this.animal = animal;
     }
 }
