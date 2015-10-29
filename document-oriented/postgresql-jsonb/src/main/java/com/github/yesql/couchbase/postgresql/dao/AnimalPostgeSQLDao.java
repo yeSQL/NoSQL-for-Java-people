@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -102,6 +103,11 @@ public class AnimalPostgeSQLDao implements AnimalDao<PostgreSQLAnimal, Long> {
     }
 
     public List<PostgreSQLAnimal> findByAreaIn(String... areas) {
-        return extract(animalRepository.findByAreaIn(areas));
+        if (areas != null && areas.length > 0) {
+            return extract(animalRepository.findByAreaIn(areas));
+        }
+        else {
+            return Collections.emptyList();
+        }
     }
 }

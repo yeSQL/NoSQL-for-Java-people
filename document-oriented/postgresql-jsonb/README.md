@@ -20,10 +20,6 @@
     <dd>5432</dd>
 </dl>
 
-# Usage
-
-* like RDBMS
-
 # About
 
 * it is only store for json, for un-structured or semi-structured data in one column

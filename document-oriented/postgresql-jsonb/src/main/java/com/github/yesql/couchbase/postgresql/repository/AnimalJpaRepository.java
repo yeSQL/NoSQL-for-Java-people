@@ -36,6 +36,6 @@ public interface AnimalJpaRepository extends CrudRepository<PosgreSQLAnimalEntit
     @Query(value = "SELECT * FROM animal, jsonb_array_elements_text(animal.animal->'areas') AS area WHERE area = :area", nativeQuery = true)
     List<PosgreSQLAnimalEntity> findByArea(@Param("area") String area);
 
-    @Query(value = "SELECT * FROM animal, jsonb_array_elements_text(animal.animal->'areas') AS area WHERE area IN :area", nativeQuery = true)
-    Set<PosgreSQLAnimalEntity> findByAreaIn(@Param("area")  String... area);
+    @Query(value = "SELECT * FROM animal, jsonb_array_elements_text(animal.animal->'areas') AS area WHERE area IN :areas", nativeQuery = true)
+    Set<PosgreSQLAnimalEntity> findByAreaIn(@Param("areas")  String... areas);
 }
