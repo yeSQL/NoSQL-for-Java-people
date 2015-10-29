@@ -31,11 +31,10 @@
 
 ## [CouchDB](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 
+## [**PostgreSQL - JSONB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/postgresql-jsonb)
+
 ## Elasticsearch
 Coming soon
 
 ## MongoDB
-Coming soon
-
-## Postgres (JSON Store)
 Coming soon
