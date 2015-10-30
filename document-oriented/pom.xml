@@ -15,6 +15,7 @@
         <module>couchdb</module>
         <module>couchbase</module>
         <module>postgresql-jsonb</module>
+        <module>mongodb</module>
     </modules>
 
 
