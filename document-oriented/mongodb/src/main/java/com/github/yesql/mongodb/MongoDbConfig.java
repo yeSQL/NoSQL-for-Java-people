@@ -36,9 +36,7 @@ public class MongoDbConfig extends AbstractMongoConfiguration {
     @Bean
     @Override
     public Mongo mongo() throws Exception {
-        MongoClient client = new MongoClient(host);
-        client.setWriteConcern(WriteConcern.SAFE);
-        return client;
+        return new MongoClient(host);
     }
 
     @Override

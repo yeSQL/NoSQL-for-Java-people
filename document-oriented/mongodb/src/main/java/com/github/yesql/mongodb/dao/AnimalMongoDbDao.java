@@ -4,6 +4,7 @@ import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
 import com.github.yesql.mongodb.repository.AnimalMongoDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public class AnimalMongoDbDao implements AnimalDao<MongoDbAnimal, String> {
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
     @Autowired
     private AnimalMongoDbRepository animalRepository;
 
@@ -52,6 +55,7 @@ public class AnimalMongoDbDao implements AnimalDao<MongoDbAnimal, String> {
 
     @Override
     public int countAll() {
+        // TODO map reduce
         return (int) animalRepository.count();
     }
 
@@ -62,41 +66,41 @@ public class AnimalMongoDbDao implements AnimalDao<MongoDbAnimal, String> {
 
     @Override
     public List<MongoDbAnimal> findBySpeciesName(String name) {
-        return null;
+        return animalRepository.findBySpeciesName(name);
     }
 
     @Override
     public List<MongoDbAnimal> findByGenusName(String name) {
-        return null;
+        return animalRepository.findByGenusName(name);
     }
 
     @Override
     public List<MongoDbAnimal> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
-        return null;
+        return animalRepository.findBySpeciesNameAndGenusName(speciesName, genusName);
     }
 
     @Override
     public List<MongoDbAnimal> findByWeight(int weight) {
-        return null;
+        return animalRepository.findByWeight(weight);
     }
 
     @Override
     public List<MongoDbAnimal> findByWeightBetween(int startWeight, int endWeight) {
-        return null;
+        return animalRepository.findByWeightBetween(startWeight, endWeight);
     }
 
     @Override
     public List<MongoDbAnimal> findByWeightOrLength(int size) {
-        return null;
+        return animalRepository.findByWeightOrLength(size);
     }
 
     @Override
     public List<MongoDbAnimal> findByArea(String area) {
-        return null;
+        return animalRepository.findByAreas(area);
     }
 
     @Override
     public List<MongoDbAnimal> findByAreaIn(String... area) {
-        return null;
+        return animalRepository.findByAreasIn(area);
     }
 }
