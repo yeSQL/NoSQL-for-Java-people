@@ -100,16 +100,14 @@ public class AnimalDaoTestBase extends AbstractTestNGSpringContextTests {
                 .compare(a1.getGenusName(), a2.getGenusName())
                 .compare(a1.getLength(), a2.getLength())
                 .compare(a1.getWeight(), a2.getWeight())
-                .compare(a1.getAreas(), a2.getAreas(), new Comparator<List<String>>() {
-                    public int compare(List<String> o1, List<String> o2) {
-                        int len = Math.min(o1.size(), o2.size());
-                        for (int i = 0; i < len; i++) {
-                            int compareTo = o1.get(0).compareTo(o2.get(0));
-                            if (compareTo != 0)
-                                return compareTo;
-                        }
-                        return 0;
+                .compare(a1.getAreas(), a2.getAreas(), (o1, o2) -> {
+                    int len = Math.min(o1.size(), o2.size());
+                    for (int i = 0; i < len; i++) {
+                        int compareTo = o1.get(0).compareTo(o2.get(0));
+                        if (compareTo != 0)
+                            return compareTo;
                     }
+                    return 0;
                 });
     }
 
