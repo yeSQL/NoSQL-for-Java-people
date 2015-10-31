@@ -2,11 +2,14 @@ package com.github.yesql.mongodb.dao;
 
 import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
+import com.github.yesql.mongodb.model.ValueObject;
 import com.github.yesql.mongodb.repository.AnimalMongoDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.util.Assert;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,8 +58,20 @@ public class AnimalMongoDbDao implements AnimalDao<MongoDbAnimal, String> {
 
     @Override
     public int countAll() {
-        // TODO map reduce
-        return (int) animalRepository.count();
+        String map = "function (doc) {" +
+                "    emit(this.$id, 1)" +
+                "}";
+        String reduce = "function (key, values) {" +
+                "    return values.length;" +
+                "}";
+        MapReduceResults<ValueObject> results = mongoTemplate.mapReduce("animal", map, reduce, ValueObject.class);
+        Iterator<ValueObject> valueObjectIterator = results.iterator();
+        if (valueObjectIterator.hasNext()) {
+            return valueObjectIterator.next().getValue();
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
