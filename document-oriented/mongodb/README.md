@@ -18,11 +18,16 @@
     <dd>JSON</dd>
     <dt>Replication</dt>
     <dd>Master-Slave</dd>
+    <dt>Sharding</dt>
+    <dd>yes</dd>
     <dt>Source code</dt>
     <dd>C++</dd>
     <dt>Default port</dt>
     <dd>27017 <a href="https://docs.mongodb.org/manual/reference/default-mongodb-port/">default ports</a></dd>
 </dl>
+
+* Mongo supports DBRef's (similar to foreign-key)
+* Mongo has full-text search support
 
 # Install
 

@@ -1,6 +1,7 @@
 package com.github.yesql.mongodb.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -11,6 +12,7 @@ public class Zoo {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private Address address;
 

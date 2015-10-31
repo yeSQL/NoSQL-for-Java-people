@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * @author Martin Janys
@@ -17,6 +18,7 @@ public class MongoDbAnimal extends Animal {
     @Version
     private Long version;
     @DBRef
+    //@Field("zoo")
     private Zoo zoo;
 
     @Override

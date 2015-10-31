@@ -1,7 +1,9 @@
 package com.github.yesql.mongodb;
 
 import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
+import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.mongodb.dao.AnimalMongoDbDao;
+import com.github.yesql.mongodb.dao.AnimalMongoTemplateDao;
 import com.github.yesql.mongodb.model.ModelPackage;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
 import com.github.yesql.mongodb.model.Zoo;
@@ -17,6 +19,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.mapping.event.LoggingEventListener;
+import org.springframework.data.mongodb.core.mapping.event.MongoMappingEvent;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.repository.support.MongoRepositoryFactoryBean;
 
 /**
@@ -65,7 +70,17 @@ public class MongoDbConfig extends AbstractMongoConfiguration {
     }
 
     @Bean
-    public AnimalMongoDbDao animalMongoDbDao() {
+    public AnimalDao<MongoDbAnimal, String> animalMongoDbDao() {
         return new AnimalMongoDbDao();
+    }
+
+    @Bean
+    public LoggingEventListener mappingEventsListener() {
+        return new LoggingEventListener();
+    }
+
+    @Bean
+    public GridFsTemplate gridFsTemplate() throws Exception {
+        return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
     }
 }

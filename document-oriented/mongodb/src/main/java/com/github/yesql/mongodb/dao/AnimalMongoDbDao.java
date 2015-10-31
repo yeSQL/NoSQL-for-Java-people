@@ -2,15 +2,18 @@ package com.github.yesql.mongodb.dao;
 
 import com.github.yesql.couchdb.dao.AnimalDao;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
-import com.github.yesql.mongodb.model.ValueObject;
 import com.github.yesql.mongodb.repository.AnimalMongoDbRepository;
+import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.util.Assert;
 
 import java.util.Iterator;
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 /**
  * @author Martin Janys
@@ -58,16 +61,11 @@ public class AnimalMongoDbDao implements AnimalDao<MongoDbAnimal, String> {
 
     @Override
     public int countAll() {
-        String map = "function (doc) {" +
-                "    emit(this.$id, 1)" +
-                "}";
-        String reduce = "function (key, values) {" +
-                "    return values.length;" +
-                "}";
-        MapReduceResults<ValueObject> results = mongoTemplate.mapReduce("animal", map, reduce, ValueObject.class);
-        Iterator<ValueObject> valueObjectIterator = results.iterator();
+        MapReduceResults<DBObject> results = mongoTemplate.mapReduce("animal", "classpath:scripts/map_all.js", "classpath:scripts/reduce_count.js", DBObject.class);
+        Iterator<DBObject> valueObjectIterator = results.iterator();
         if (valueObjectIterator.hasNext()) {
-            return valueObjectIterator.next().getValue();
+            Double value = (Double) valueObjectIterator.next().get("value");
+            return value.intValue();
         }
         else {
             return 0;
