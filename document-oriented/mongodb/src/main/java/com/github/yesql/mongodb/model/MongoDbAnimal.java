@@ -3,6 +3,7 @@ package com.github.yesql.mongodb.model;
 import com.github.yesql.couchdb.model.Animal;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -15,6 +16,8 @@ public class MongoDbAnimal extends Animal {
     private String id;
     @Version
     private Long version;
+    @DBRef
+    private Zoo zoo;
 
     @Override
     public String getId() {
@@ -31,5 +34,13 @@ public class MongoDbAnimal extends Animal {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public Zoo getZoo() {
+        return zoo;
+    }
+
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
     }
 }

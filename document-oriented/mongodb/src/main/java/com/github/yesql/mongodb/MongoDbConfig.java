@@ -4,7 +4,9 @@ import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
 import com.github.yesql.mongodb.dao.AnimalMongoDbDao;
 import com.github.yesql.mongodb.model.ModelPackage;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
+import com.github.yesql.mongodb.model.Zoo;
 import com.github.yesql.mongodb.repository.AnimalMongoDbRepository;
+import com.github.yesql.mongodb.repository.ZooRepository;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
@@ -48,6 +50,15 @@ public class MongoDbConfig extends AbstractMongoConfiguration {
     public MongoRepositoryFactoryBean<AnimalMongoDbRepository, MongoDbAnimal, String> mongoRepositoryFactoryBean(MongoOperations mongoOperations) {
         MongoRepositoryFactoryBean<AnimalMongoDbRepository, MongoDbAnimal, String> factoryBean = new MongoRepositoryFactoryBean<>();
         factoryBean.setRepositoryInterface(AnimalMongoDbRepository.class);
+        factoryBean.setMongoOperations(mongoOperations);
+        factoryBean.setCreateIndexesForQueryMethods(true);
+        return factoryBean;
+    }
+
+    @Bean
+    public MongoRepositoryFactoryBean<ZooRepository, Zoo, String> zooRepositoryRepositoryFactoryBean(MongoOperations mongoOperations) {
+        MongoRepositoryFactoryBean<ZooRepository, Zoo, String> factoryBean = new MongoRepositoryFactoryBean<>();
+        factoryBean.setRepositoryInterface(ZooRepository.class);
         factoryBean.setMongoOperations(mongoOperations);
         factoryBean.setCreateIndexesForQueryMethods(true);
         return factoryBean;
