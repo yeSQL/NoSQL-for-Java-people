@@ -16,6 +16,7 @@
         <module>couchbase</module>
         <module>postgresql-jsonb</module>
         <module>mongodb</module>
+        <module>elasticsearch</module>
     </modules>
 
 

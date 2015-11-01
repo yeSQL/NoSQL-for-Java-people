@@ -15,7 +15,7 @@
     <dt>DB API</dt>
     <dd>Driver, CLI</dd>
     <dt>Queries<dt>
-    <dd>JSON</dd>
+    <dd>JSON, mapreduce</dd>
     <dt>Replication</dt>
     <dd>Master-Slave</dd>
     <dt>Sharding</dt>
