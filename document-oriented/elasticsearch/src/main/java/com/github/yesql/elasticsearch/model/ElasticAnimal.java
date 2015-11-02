@@ -7,14 +7,14 @@ import com.github.yesql.couchdb.model.Animal;
  */
 public class ElasticAnimal extends Animal {
 
-    private Long id;
+    private String id;
 
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

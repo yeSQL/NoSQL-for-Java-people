@@ -8,10 +8,11 @@ import java.sql.Types;
 /**
  * @author Martin Janys
  */
-public class JsonbPostgreSQL82Dialect extends PostgreSQL82Dialect {
+public class JSONBPostgreSQL82Dialect extends PostgreSQL82Dialect {
 
-    public JsonbPostgreSQL82Dialect() {
+    public JSONBPostgreSQL82Dialect() {
         super();
         registerColumnType(Types.JAVA_OBJECT, JsonbType.NAME);
     }
 }
+

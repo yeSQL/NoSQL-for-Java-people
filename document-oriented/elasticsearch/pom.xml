@@ -11,8 +11,13 @@
 
     <artifactId>elasticsearch</artifactId>
 
+    <properties>
+        <es.version>2.0.0</es.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
+<!--
             <dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
@@ -20,6 +25,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+-->
+<!--
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-releasetrain</artifactId>
@@ -27,10 +34,26 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+-->
             <dependency>
                 <groupId>com.github.yesql</groupId>
                 <artifactId>dao-commons</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${es.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>18.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.6.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -40,6 +63,7 @@
             <groupId>com.github.yesql</groupId>
             <artifactId>dao-commons</artifactId>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
@@ -47,6 +71,19 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
 

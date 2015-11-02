@@ -58,9 +58,15 @@ The service 'elasticsearch-service-x64' has been started
 ## Rest API
 
 * check
+    * curl
 ```
 curl -XGET 'localhost:9200/_cluster/health?pretty=true'
 ```
+    * Sense
 ```
 GET /_cluster/health
+```
+* list indices
+```
+GET /_all
 ```

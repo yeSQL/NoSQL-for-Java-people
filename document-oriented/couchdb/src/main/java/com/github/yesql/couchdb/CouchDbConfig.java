@@ -24,8 +24,7 @@ import java.net.MalformedURLException;
 @PropertySource("classpath:couchdb.properties")
 @Import(PropertyPlaceHolderConfiguration.class)
 public class CouchDbConfig {
-    @Autowired
-    Environment environment;
+
     @Value("${couchdb.name}") String dbName;
     @Value("${couchdb.host}") String host;
     @Value("${couchdb.port}") int port;
@@ -34,6 +33,10 @@ public class CouchDbConfig {
     @Value("${couchdb.socketTimeout}") int socketTimeout;
     @Value("${couchdb.username}") String username;
     @Value("${couchdb.password}") String password;
+
+    @Autowired
+    Environment environment;
+
     @Bean
     public HttpClient httpClient() throws MalformedURLException {
         return new StdHttpClient.Builder()
