@@ -24,15 +24,19 @@ import java.util.concurrent.Future;
 /**
  * @author Martin Janys
  */
-public class AsyncAnimalElasticDaoImpl implements AsyncAnimalElasticDao {
+public class AsyncAnimalElasticDaoImpl extends AbstractElasticDao implements AsyncAnimalElasticDao {
 
-    private final String INDEX = "animal";
-    private final String TYPE = "animal";
+    private static final String INDEX = "animal";
+    private static final String TYPE = "animal";
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private Client client;
+
+    public AsyncAnimalElasticDaoImpl() {
+        super(INDEX);
+    }
 
     @Override
     public Future<ElasticAnimal> findEntry(String id) {

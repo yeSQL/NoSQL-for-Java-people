@@ -6,6 +6,7 @@ import com.github.yesql.couchdb.dao.AsyncAnimalDao;
 import com.github.yesql.couchdb.dao.FutureToSyncWrapperDao;
 import com.github.yesql.elasticsearch.dao.AsyncAnimalElasticDaoImpl;
 import com.github.yesql.elasticsearch.model.ElasticAnimal;
+import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -32,6 +33,11 @@ public class ElasticConfig {
                 .settings(Settings.builder().put("cluster.name", "elastic"))
                 .build()
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+    }
+
+    @Bean
+    public AdminClient adminClient(Client client) {
+        return client.admin();
     }
 
     @Bean
