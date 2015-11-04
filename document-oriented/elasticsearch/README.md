@@ -54,6 +54,8 @@ The service 'elasticsearch-service-x64' has been started
 # GUI
 
 * chrome plugin [Sense](https://chrome.google.com/webstore/detail/sense-beta/lhjgkmllcaadmopgmanpapmpjgmfcfig?utm_source=chrome-app-launcher-info-dialog)
+* "admin console" plugin [elasticHQ](http://www.elastichq.org/app/index.php)
+* "explain search" plugin [inquisitor](https://github.com/polyfractal/elasticsearch-inquisitor)
 
 ## Rest API
 
