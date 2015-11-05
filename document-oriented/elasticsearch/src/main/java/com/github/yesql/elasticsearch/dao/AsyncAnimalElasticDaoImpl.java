@@ -19,15 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * @author Martin Janys
@@ -192,42 +188,160 @@ public class AsyncAnimalElasticDaoImpl extends AbstractElasticDao implements Asy
 
     @Override
     public Future<List<ElasticAnimal>> findBySpeciesName(String name) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX).setTypes(TYPE).setQuery(QueryBuilders.matchQuery("speciesName", name)).execute(new ActionThrowsListener<SearchResponse>() {
+            @Override
+            public void onResponse(SearchResponse searchResponse) {
+                future.complete(extractList(searchResponse));
+            }
+            @Override
+            public void onFailure(Throwable e) {
+                future.completeExceptionally(e);
+            }
+        });
+        return future;
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByGenusName(String name) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX).setTypes(TYPE).setQuery(QueryBuilders.matchQuery("genusName", name)).execute(new ActionThrowsListener<SearchResponse>() {
+            @Override
+            public void onResponse(SearchResponse searchResponse) {
+                future.complete(extractList(searchResponse));
+            }
+            @Override
+            public void onFailure(Throwable e) {
+                future.completeExceptionally(e);
+            }
+        });
+        return future;
     }
 
     @Override
     public Future<List<ElasticAnimal>> findBySpeciesNameAndGenusName(String speciesName, String genusName) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(
+                        QueryBuilders.boolQuery()
+                                .must(QueryBuilders.matchQuery("speciesName", speciesName))
+                                .must(QueryBuilders.matchQuery("genusName", genusName)))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                future.completeExceptionally(e);
+            }
+                });
+        return future;
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByWeight(int weight) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(QueryBuilders.matchQuery("weight", weight))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                        future.completeExceptionally(e);
+                    }
+                });
+        return future;
+
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByWeightBetween(int startWeight, int endWeight) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(QueryBuilders.boolQuery()
+                        .must(QueryBuilders.rangeQuery("weight").from(startWeight).to(endWeight)))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                        future.completeExceptionally(e);
+                    }
+                });
+        return future;
+
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByWeightOrLength(int size) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(
+                        QueryBuilders.boolQuery()
+                                .should(QueryBuilders.matchQuery("weight", size))
+                                .should(QueryBuilders.matchQuery("length", size)))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                        future.completeExceptionally(e);
+                    }
+                });
+        return future;
+
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByArea(String area) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(QueryBuilders.termQuery("areas", area))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                        future.completeExceptionally(e);
+                    }
+                });
+        return future;
+
     }
 
     @Override
     public Future<List<ElasticAnimal>> findByAreaIn(String... area) {
-        return null;
+        CompletableFuture<List<ElasticAnimal>> future = new CompletableFuture<>();
+        client.prepareSearch(INDEX)
+                .setTypes(TYPE)
+                .setQuery(QueryBuilders.termsQuery("areas", area))
+                .execute(new ActionThrowsListener<SearchResponse>() {
+                    @Override
+                    public void onResponse(SearchResponse searchResponse) {
+                        future.complete(extractList(searchResponse));
+                    }
+                    @Override
+                    public void onFailure(Throwable e) {
+                        future.completeExceptionally(e);
+                    }
+                });
+        return future;
+
     }
 
     private ElasticAnimal toDto(String sourceAsString) {
@@ -246,5 +360,16 @@ public class AsyncAnimalElasticDaoImpl extends AbstractElasticDao implements Asy
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<ElasticAnimal> extractList(SearchResponse searchResponse) {
+        List<ElasticAnimal> result = new ArrayList<>();
+        SearchHit[] hits = searchResponse.getHits().getHits();
+        for (SearchHit hit : hits) {
+            ElasticAnimal elasticAnimal = toDto(hit.getSourceAsString());
+            elasticAnimal.setId(hit.getId());
+            result.add(elasticAnimal);
+        }
+        return result;
     }
 }

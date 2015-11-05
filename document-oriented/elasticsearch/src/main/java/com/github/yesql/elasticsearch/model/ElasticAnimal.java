@@ -8,7 +8,7 @@ import com.github.yesql.couchdb.model.Animal;
  */
 public class ElasticAnimal extends Animal {
 
-    /*@JsonIgnore*/
+    @JsonIgnore
     private String id;
 
     @Override

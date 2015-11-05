@@ -9,7 +9,10 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.testng.util.RetryAnalyzerCount;
 
 import java.util.List;
 
@@ -26,6 +29,13 @@ public class AnimalElasticSpringDaoTest extends AnimalDaoIntegrationTest {
     @Autowired
     private AdminClient client;
 
+    private static final class Retry extends RetryAnalyzerCount {
+        @Override
+        public boolean retryMethod(ITestResult result) {
+            return !result.isSuccess();
+        }
+    }
+
     public AnimalElasticSpringDaoTest() {
         super(ElasticAnimal.class);
     }
@@ -37,6 +47,13 @@ public class AnimalElasticSpringDaoTest extends AnimalDaoIntegrationTest {
         client.indices().prepareRefresh("animal").execute();
     }
 
+    @Test(groups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testSave() {
+        super.testSave();
+    }
+
+    @Test(dependsOnGroups = "read", alwaysRun = true, retryAnalyzer = Retry.class)
     public void testDeleteAll() {
         List<Animal> allEntries = dao.findAllEntries();
         int count = dao.countAll();
@@ -50,5 +67,77 @@ public class AnimalElasticSpringDaoTest extends AnimalDaoIntegrationTest {
 
         refresh();
         assertEquals(dao.countAll(), 0);
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindAll() {
+        super.testFindAll();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", dependsOnMethods = "testFindAll", retryAnalyzer = Retry.class)
+    @Override
+    public void testFind() {
+        super.testFind();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", dependsOnMethods = "testFindAll", retryAnalyzer = Retry.class)
+    @Override
+    public void testUpdate() {
+        super.testUpdate();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindBySpeciesName() throws Exception {
+        super.testFindBySpeciesName();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByGenusName() throws Exception {
+        super.testFindByGenusName();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindBySpeciesNameAndGenusName() throws Exception {
+        super.testFindBySpeciesNameAndGenusName();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByWeight() throws Exception {
+        super.testFindByWeight();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByWeightBetween() throws Exception {
+        super.testFindByWeightBetween();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByWeightOrLength() throws Exception {
+        super.testFindByWeightOrLength();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByArea() throws Exception {
+        super.testFindByArea();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testFindByAreaIn() throws Exception {
+        super.testFindByAreaIn();
+    }
+
+    @Test(groups = "read", dependsOnGroups = "create", retryAnalyzer = Retry.class)
+    @Override
+    public void testCount() throws Exception {
+        super.testCount();
     }
 }
