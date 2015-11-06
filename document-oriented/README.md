@@ -27,14 +27,12 @@
 
 **Finally** you should benefit from pos and cons of both databases (no-sql and sql)
 
-## [Couchbase](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchbase)
+## [**Couchbase**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchbase)
 
-## [CouchDB](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
+## [**CouchDB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 
 ## [**PostgreSQL - JSONB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/postgresql-jsonb)
 
-## Elasticsearch
-Coming soon
+## [**Elasticsearch**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/elasticsearch)
 
-## MongoDB
-Coming soon
+## [**MongoDB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/mongodb)

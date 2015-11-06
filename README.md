@@ -5,6 +5,8 @@
 * [**Couchbase**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchbase)
 * [**CouchDB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/couchdb)
 * [**PostgreSQL - JSONB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/postgresql-jsonb)
+* [**Elasticsearch**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/elasticsearch)
+* [**MongoDB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/mongodb)
 
 ## [Key-value databases](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/key-value)
 Coming soon
