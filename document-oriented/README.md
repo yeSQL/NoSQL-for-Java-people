@@ -33,6 +33,6 @@
 
 ## [**PostgreSQL - JSONB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/postgresql-jsonb)
 
-## [**Elasticsearch**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/elasticsearch)
+## [**Elasticsearch**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/elasticsearch) _incomplete_
 
 ## [**MongoDB**](https://github.com/yeSQL/NoSQL-for-Java-people/tree/master/document-oriented/mongodb)
