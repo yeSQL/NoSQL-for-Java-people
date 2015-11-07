@@ -24,6 +24,7 @@ import static org.testng.Assert.*;
 @ContextConfiguration(
         classes = ElasticConfig.class
 )
+@Test(enabled = false)
 public class AnimalElasticSpringDaoTest extends AnimalDaoIntegrationTest {
 
     @Autowired
