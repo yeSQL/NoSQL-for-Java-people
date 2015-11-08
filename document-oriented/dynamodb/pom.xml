@@ -3,22 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <artifactId>document-oriented</artifactId>
         <groupId>com.github.yesql</groupId>
-        <artifactId>nosql</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>document-oriented</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>couchdb</module>
-        <module>couchbase</module>
-        <module>postgresql-jsonb</module>
-        <module>mongodb</module>
-        <module>elasticsearch</module>
-        <module>dynamodb</module>
-    </modules>
+    <artifactId>dynamodb</artifactId>
 
 
 </project>
