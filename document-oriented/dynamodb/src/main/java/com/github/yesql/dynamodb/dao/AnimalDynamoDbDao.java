@@ -1,6 +1,7 @@
 package com.github.yesql.dynamodb.dao;
 
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.github.yesql.common.dao.AnimalDao;
 import com.github.yesql.dynamodb.model.DynamoDbAnimal;
 
 import java.util.List;
@@ -8,36 +9,40 @@ import java.util.List;
 /**
  * @author Martin Janys
  */
-public class AnimalDynamoDbDao extends AbstractDynamoDbDao implements AnimalDao<DynamoDbAnimal, String> {
+public class AnimalDynamoDbDao extends AbstractDynamoDbDao<DynamoDbAnimal, String, Object> implements AnimalDao<DynamoDbAnimal, String> {
+
+    public AnimalDynamoDbDao(AmazonDynamoDB client) {
+        super(DynamoDbAnimal.class, client);
+    }
 
     @Override
     public DynamoDbAnimal findEntry(String s) {
-        return null;
+        return findOne(s);
     }
 
     @Override
     public List<DynamoDbAnimal> findAllEntries() {
-        return null;
+        return findAll();
     }
 
     @Override
-    public DynamoDbAnimal saveEntry(DynamoDbAnimal dynamoDbAnimal) {
-        return null;
+    public String saveEntry(DynamoDbAnimal dynamoDbAnimal) {
+        return save(dynamoDbAnimal);
     }
 
     @Override
-    public DynamoDbAnimal updateEntry(DynamoDbAnimal dynamoDbAnimal) {
-        return null;
+    public void updateEntry(DynamoDbAnimal dynamoDbAnimal) {
+        update(dynamoDbAnimal);
     }
 
     @Override
     public void deleteEntry(String s) {
-
+        delete(s);
     }
 
     @Override
     public void deleteEntry(DynamoDbAnimal dynamoDbAnimal) {
-
+        delete(dynamoDbAnimal);
     }
 
     @Override

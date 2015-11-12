@@ -1,10 +1,7 @@
 package com.github.yesql.dynamodb.dao;
 
-import com.github.yesql.couchdb.model.Animal;
-import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
+import com.github.yesql.common.test.AnimalDaoIntegrationTest;
 import com.github.yesql.dynamodb.model.DynamoDbAnimal;
-
-import static org.testng.Assert.*;
 
 /**
  * @author Martin Janys
