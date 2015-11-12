@@ -1,5 +1,6 @@
 package com.github.yesql.couchdb;
 
+import com.github.yesql.common.PropertyPlaceHolderConfiguration;
 import com.github.yesql.couchdb.dao.AnimalCouchDbDao;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;

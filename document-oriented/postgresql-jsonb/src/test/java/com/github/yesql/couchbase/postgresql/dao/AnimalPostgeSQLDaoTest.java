@@ -2,7 +2,7 @@ package com.github.yesql.couchbase.postgresql.dao;
 
 import com.github.yesql.couchbase.postgresql.PostgreSQLConfig;
 import com.github.yesql.couchbase.postgresql.model.PostgreSQLAnimal;
-import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
+import com.github.yesql.common.test.AnimalDaoIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
 
 /**

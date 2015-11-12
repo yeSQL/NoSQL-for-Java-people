@@ -1,6 +1,6 @@
 package com.github.yesql.mongodb.dao;
 
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.dao.AnimalDao;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;

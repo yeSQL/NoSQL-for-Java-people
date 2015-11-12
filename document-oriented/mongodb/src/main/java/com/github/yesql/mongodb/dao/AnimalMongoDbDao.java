@@ -1,19 +1,16 @@
 package com.github.yesql.mongodb.dao;
 
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.dao.AnimalDao;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
 import com.github.yesql.mongodb.repository.AnimalMongoDbRepository;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.util.Assert;
 
 import java.util.Iterator;
 import java.util.List;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 /**
  * @author Martin Janys

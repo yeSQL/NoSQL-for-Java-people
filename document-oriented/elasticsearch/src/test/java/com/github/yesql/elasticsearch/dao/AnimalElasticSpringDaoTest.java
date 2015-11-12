@@ -1,12 +1,10 @@
 package com.github.yesql.elasticsearch.dao;
 
-import com.github.yesql.couchdb.model.Animal;
-import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
+import com.github.yesql.common.model.Animal;
+import com.github.yesql.common.test.AnimalDaoIntegrationTest;
 import com.github.yesql.elasticsearch.ElasticConfig;
 import com.github.yesql.elasticsearch.model.ElasticAnimal;
 import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.ITestResult;

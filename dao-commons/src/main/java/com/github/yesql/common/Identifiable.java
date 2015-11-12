@@ -1,4 +1,4 @@
-package com.github.yesql.couchdb;
+package com.github.yesql.common;
 
 /**
  * @author Martin Janys

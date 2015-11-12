@@ -12,14 +12,12 @@ import com.couchbase.client.java.query.consistency.ScanConsistency;
 import com.couchbase.client.java.view.Stale;
 import com.couchbase.client.java.view.ViewQuery;
 import com.couchbase.client.java.view.ViewRow;
-import com.github.yesql.couchbase.dao.ql.CouchbaseQLDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.dao.AnimalDao;
 import com.google.gson.Gson;
 import org.biins.cauchbase.AutoViews;
 import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 

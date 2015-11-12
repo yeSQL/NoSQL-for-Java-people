@@ -3,13 +3,12 @@ package com.github.yesql.couchbase.postgresql.dao;
 import com.github.yesql.couchbase.postgresql.entity.PosgreSQLAnimalEntity;
 import com.github.yesql.couchbase.postgresql.model.PostgreSQLAnimal;
 import com.github.yesql.couchbase.postgresql.repository.AnimalJpaRepository;
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.dao.AnimalDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 /**

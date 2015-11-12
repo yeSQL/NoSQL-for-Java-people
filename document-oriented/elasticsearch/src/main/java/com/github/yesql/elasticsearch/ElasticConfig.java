@@ -1,9 +1,9 @@
 package com.github.yesql.elasticsearch;
 
-import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
-import com.github.yesql.couchdb.dao.AnimalDao;
-import com.github.yesql.couchdb.dao.AsyncAnimalDao;
-import com.github.yesql.couchdb.dao.FutureToSyncWrapperDao;
+import com.github.yesql.common.PropertyPlaceHolderConfiguration;
+import com.github.yesql.common.dao.AnimalDao;
+import com.github.yesql.common.dao.AsyncAnimalDao;
+import com.github.yesql.common.dao.FutureToSyncWrapperDao;
 import com.github.yesql.elasticsearch.dao.AsyncAnimalElasticDaoImpl;
 import com.github.yesql.elasticsearch.model.ElasticAnimal;
 import org.elasticsearch.client.AdminClient;

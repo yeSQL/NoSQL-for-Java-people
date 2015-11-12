@@ -1,5 +1,6 @@
 package com.github.yesql.couchbase;
 
+import com.github.yesql.common.dao.*;
 import com.github.yesql.couchbase.dao.async.AnimalCouchbaseObservableViewDao;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
 import com.github.yesql.couchdb.dao.*;

@@ -1,12 +1,10 @@
 package com.github.yesql.couchbase.postgresql.repository;
 
 import com.github.yesql.couchbase.postgresql.entity.PosgreSQLAnimalEntity;
-import com.github.yesql.couchdb.dao.AnimalDao;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package com.github.yesql.couchdb.dao;
+package com.github.yesql.common.dao;
 
 import rx.Observable;
 

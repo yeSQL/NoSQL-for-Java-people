@@ -2,21 +2,18 @@ package com.github.yesql.couchbase.dao.async;
 
 import com.couchbase.cbadmin.assets.Bucket.BucketType;
 import com.couchbase.client.java.document.AbstractDocument;
-import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.view.AsyncViewRow;
 import com.github.yesql.couchbase.DocumentConverter;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.dao.ObservableAnimalDao;
+import com.github.yesql.common.dao.ObservableAnimalDao;
 import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;
 import rx.Observable;
-import rx.functions.Func1;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Martin Janys

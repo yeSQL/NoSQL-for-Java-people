@@ -1,7 +1,7 @@
 package com.github.yesql.mongodb.dao;
 
-import com.github.yesql.couchdb.model.Animal;
-import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
+import com.github.yesql.common.model.Animal;
+import com.github.yesql.common.test.AnimalDaoIntegrationTest;
 import com.github.yesql.mongodb.MongoDbConfig;
 import com.github.yesql.mongodb.model.Address;
 import com.github.yesql.mongodb.model.MongoDbAnimal;
@@ -14,7 +14,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 import static org.testng.Assert.assertNotNull;
 

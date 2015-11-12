@@ -1,6 +1,6 @@
-package com.github.yesql.couchdb.dao;
+package com.github.yesql.common.dao;
 
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.model.Animal;
 
 import java.io.Serializable;
 import java.util.List;

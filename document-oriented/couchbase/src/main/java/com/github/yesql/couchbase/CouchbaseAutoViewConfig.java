@@ -2,7 +2,7 @@ package com.github.yesql.couchbase;
 
 import com.couchbase.cbadmin.client.CouchbaseAdmin;
 import com.couchbase.cbadmin.client.CouchbaseAdminImpl;
-import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
+import com.github.yesql.common.PropertyPlaceHolderConfiguration;
 import org.biins.cauchbase.AutoViews;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

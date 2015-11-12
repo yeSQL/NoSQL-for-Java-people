@@ -2,29 +2,14 @@ package com.github.yesql.couchbase.dao.ql;
 
 import com.couchbase.client.java.AsyncBucket;
 import com.couchbase.client.java.Bucket;
-import com.couchbase.client.java.document.Document;
 import com.couchbase.client.java.document.EntityDocument;
 import com.couchbase.client.java.document.JsonDocument;
-import com.couchbase.client.java.document.RawJsonDocument;
-import com.couchbase.client.java.document.json.JsonObject;
-import com.couchbase.client.java.query.AsyncQueryResult;
-import com.couchbase.client.java.query.AsyncQueryRow;
-import com.couchbase.client.java.query.Query;
-import com.couchbase.client.java.query.Statement;
 import com.couchbase.client.java.repository.Repository;
 import com.couchbase.client.java.repository.mapping.EntityConverter;
-import com.couchbase.client.java.view.Stale;
-import com.github.yesql.couchbase.DocumentConverter;
-import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.Identifiable;
-import org.biins.cauchbase.AutoViews;
+import com.github.yesql.common.Identifiable;
 import org.springframework.beans.factory.annotation.Autowired;
-import rx.Observable;
-import rx.functions.Func1;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.Future;
 
 /**
  * @author Martin Janys

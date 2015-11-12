@@ -1,7 +1,7 @@
 package com.github.yesql.elasticsearch.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.model.Animal;
 
 /**
  * @author Martin Janys

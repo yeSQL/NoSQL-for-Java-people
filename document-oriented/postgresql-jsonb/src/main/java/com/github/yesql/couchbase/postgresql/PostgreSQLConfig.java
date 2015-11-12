@@ -2,18 +2,16 @@ package com.github.yesql.couchbase.postgresql;
 
 import com.github.yesql.couchbase.postgresql.dao.AnimalPostgeSQLDao;
 import com.github.yesql.couchbase.postgresql.model.PostgreSQLAnimal;
-import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.PropertyPlaceHolderConfiguration;
+import com.github.yesql.common.dao.AnimalDao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Martin Janys

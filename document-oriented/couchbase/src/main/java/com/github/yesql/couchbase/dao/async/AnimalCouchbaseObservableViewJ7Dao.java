@@ -9,14 +9,12 @@ import com.couchbase.client.java.view.AsyncViewResult;
 import com.couchbase.client.java.view.AsyncViewRow;
 import com.github.yesql.couchbase.DocumentConverter;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.dao.ObservableAnimalDao;
+import com.github.yesql.common.dao.ObservableAnimalDao;
 import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;
 import rx.Observable;
 import rx.functions.Func1;
-
-import java.util.*;
 
 import static com.github.yesql.couchbase.DocumentConverter.convert;
 

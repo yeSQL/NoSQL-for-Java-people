@@ -1,6 +1,6 @@
 package com.github.yesql.couchbase.postgresql.model;
 
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.model.Animal;
 
 /**
  * @author Martin Janys

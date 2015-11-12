@@ -4,7 +4,7 @@ import com.couchbase.client.java.document.EntityDocument;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.repository.mapping.DefaultEntityConverter;
-import com.github.yesql.couchdb.Identifiable;
+import com.github.yesql.common.Identifiable;
 import com.google.gson.Gson;
 
 /**

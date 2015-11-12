@@ -2,9 +2,8 @@ package com.github.yesql.couchbase;
 
 import com.couchbase.client.java.document.RawJsonDocument;
 import com.couchbase.client.java.view.ViewRow;
-import com.github.yesql.couchdb.Identifiable;
+import com.github.yesql.common.Identifiable;
 import com.google.gson.Gson;
-import rx.Observable;
 
 import java.util.*;
 

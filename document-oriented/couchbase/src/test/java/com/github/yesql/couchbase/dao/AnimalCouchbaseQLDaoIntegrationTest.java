@@ -2,13 +2,11 @@ package com.github.yesql.couchbase.dao;
 
 import com.github.yesql.couchbase.CouchbaseQLConfig;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.model.Animal;
-import com.github.yesql.couchdb.test.AnimalDaoIntegrationTest;
+import com.github.yesql.common.model.Animal;
+import com.github.yesql.common.test.AnimalDaoIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.Objects;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;

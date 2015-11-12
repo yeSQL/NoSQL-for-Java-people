@@ -3,7 +3,7 @@ package com.github.yesql.couchbase;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.repository.mapping.EntityConverter;
 import com.github.yesql.couchbase.dao.ql.AnimalCouchbaseQLDao;
-import com.github.yesql.couchdb.PropertyPlaceHolderConfiguration;
+import com.github.yesql.common.PropertyPlaceHolderConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

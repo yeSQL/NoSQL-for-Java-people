@@ -1,7 +1,7 @@
-    package com.github.yesql.couchdb.test;
+    package com.github.yesql.common.test;
 
-import com.github.yesql.couchdb.dao.AnimalDao;
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.dao.AnimalDao;
+import com.github.yesql.common.model.Animal;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

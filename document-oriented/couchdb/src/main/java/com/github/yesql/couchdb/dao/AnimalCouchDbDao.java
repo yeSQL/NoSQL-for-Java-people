@@ -1,5 +1,6 @@
 package com.github.yesql.couchdb.dao;
 
+import com.github.yesql.common.dao.AnimalDao;
 import com.github.yesql.couchdb.model.CouchDbAnimal;
 import org.ektorp.BulkDeleteDocument;
 import org.ektorp.ComplexKey;

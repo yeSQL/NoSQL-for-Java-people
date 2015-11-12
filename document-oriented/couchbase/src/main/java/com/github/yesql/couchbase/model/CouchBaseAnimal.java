@@ -1,7 +1,7 @@
 package com.github.yesql.couchbase.model;
 
-import com.github.yesql.couchdb.Identifiable;
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.Identifiable;
+import com.github.yesql.common.model.Animal;
 import com.google.common.base.Objects;
 
 /**

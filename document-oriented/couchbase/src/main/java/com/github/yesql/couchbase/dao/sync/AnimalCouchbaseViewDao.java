@@ -8,7 +8,7 @@ import com.couchbase.client.java.view.ViewResult;
 import com.couchbase.client.java.view.ViewRow;
 import com.github.yesql.couchbase.DocumentConverter;
 import com.github.yesql.couchbase.model.CouchbaseAnimal;
-import com.github.yesql.couchdb.dao.AnimalDao;
+import com.github.yesql.common.dao.AnimalDao;
 import org.biins.cauchbase.Bucket;
 import org.biins.cauchbase.View;
 import org.springframework.beans.factory.InitializingBean;

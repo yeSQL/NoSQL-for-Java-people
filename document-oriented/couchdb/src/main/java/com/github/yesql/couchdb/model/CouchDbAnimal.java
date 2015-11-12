@@ -2,6 +2,7 @@ package com.github.yesql.couchdb.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.yesql.common.model.Animal;
 import com.google.common.base.Objects;
 
 /**

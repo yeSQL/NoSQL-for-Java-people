@@ -1,6 +1,6 @@
-package com.github.yesql.couchdb.test;
+package com.github.yesql.common.test;
 
-import com.github.yesql.couchdb.model.Animal;
+import com.github.yesql.common.model.Animal;
 import com.google.common.collect.ComparisonChain;
 import org.apache.log4j.Logger;
 import org.biins.objectbuilder.builder.ObjectBuilder;
@@ -8,7 +8,6 @@ import org.biins.objectbuilder.builder.generator.CyclicValuesGenerator;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
