@@ -36,7 +36,8 @@
 ## Windows service
 * Create
 ```
-mongod --dbpath "d:\mongoDB\data --logpath "d:\mongoDB\logs.txt --install --serviceName "MongoDB"
+mongod --dbpath=D:\mongodb --logpath=D:\mongodb\log.txt --install
+
 net start MongoDB
 ```
 * Remove
